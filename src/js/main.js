@@ -13,6 +13,7 @@ const lenis = new Lenis({ lerp: 0.1 });
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((t) => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
+if (import.meta.env.DEV) { window.__lenis = lenis; window.__ScrollTrigger = ScrollTrigger; }
 
 initNav();
 const cartUI = initCartUI();
@@ -67,26 +68,79 @@ if (bubbleWrap) {
 // ── Marquee ──
 gsap.to('#marqueeTrack', { xPercent: -50, duration: 22, repeat: -1, ease: 'none' });
 
+// ── Spotted in the Wild — UGC wall (placeholder content) ──
+// Mirrors the mock-now/live-later pattern in lib/shopify.js: seeded with real
+// HydroWild product/lifestyle assets today, swap for live IG Graph API data
+// once they grant access.
+const WALL_POSTS = [
+  { type: 'image', src: '/assets/img/lifestyle-2.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@sadie.olivia', caption: 'Back to school survival kit 💙', likes: 342 },
+  { type: 'video', src: '/assets/video/brand-video.mp4', poster: '/assets/video/brand-video-poster.jpg', color: '#4adb14', creatureImg: '/assets/img/creature-nessie.png', handle: '@coach_marcus', caption: 'Halftime hydration check ✅', likes: 891 },
+  { type: 'image', src: '/assets/img/pack-watermelon.png', color: '#4adb14', creatureImg: '/assets/img/creature-nessie.png', handle: '@thefitmomlife', caption: 'Watermelon > everything else in this house', likes: 567 },
+  { type: 'image', src: '/assets/img/lifestyle-3.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@jaxon.does.sports', caption: 'Pre-game ritual 🔵', likes: 423 },
+  { type: 'image', src: '/assets/img/pack-strawberry-lemonade.png', color: '#ff5d8f', creatureImg: '/assets/img/creature-yeti.png', handle: '@averyandthekids', caption: 'The yeti made them drink it, not me', likes: 612 },
+  { type: 'image', src: '/assets/img/lifestyle-4.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@beachdaywithkids', caption: 'Sunglasses on, HydroWild in hand', likes: 289 },
+  { type: 'image', src: '/assets/img/pack-fruit-punch.png', color: '#ff8327', creatureImg: '/assets/img/creature-wampus.png', handle: '@travel_with_tanner', caption: 'Road trip essential 🧡', likes: 754 },
+];
+
+const wallTrack = document.getElementById('wallTrack');
+if (wallTrack) {
+  const cardHTML = (p) => `
+    <div class="wall__card" style="--flavor:${p.color}">
+      <img class="wall__badge" src="${p.creatureImg}" alt="" aria-hidden="true" />
+      <div class="wall__media">
+        ${
+          p.type === 'video'
+            ? `<video src="${p.src}" poster="${p.poster}" muted loop playsinline preload="metadata"></video><span class="wall__play">▶</span>`
+            : `<img src="${p.src}" alt="${p.caption}" loading="lazy" />`
+        }
+        <div class="wall__info">
+          <span class="wall__handle">${p.handle}</span>
+          <p class="wall__caption">${p.caption}</p>
+          <span class="wall__likes">♥ ${p.likes.toLocaleString()}</span>
+        </div>
+      </div>
+    </div>`;
+
+  // Duplicate the set so the strip can loop seamlessly, same trick as the marquee.
+  wallTrack.innerHTML = [...WALL_POSTS, ...WALL_POSTS].map(cardHTML).join('');
+
+  const wallTween = gsap.to(wallTrack, { xPercent: -50, duration: 42, repeat: -1, ease: 'none' });
+  wallTrack.addEventListener('mouseenter', () => wallTween.pause());
+  wallTrack.addEventListener('mouseleave', () => wallTween.play());
+
+  wallTrack.querySelectorAll('.wall__card').forEach((card) => {
+    const vid = card.querySelector('video');
+    if (!vid) return;
+    card.addEventListener('mouseenter', () => vid.play().catch(() => {}));
+    card.addEventListener('mouseleave', () => {
+      vid.pause();
+      vid.currentTime = 0;
+    });
+  });
+}
+
 // ── Flavor worlds — build from data ──
 const worlds = document.getElementById('flavors');
 worlds.innerHTML = FLAVORS.map(
   (f, i) => `
-  <section class="world" id="world-${f.id}" style="background:${f.bg}">
-    <div class="world__ghost">${f.name}</div>
-    <div class="world__inner" style="${i % 2 ? 'direction:rtl' : ''}">
-      <div class="world__visual" style="direction:ltr">
-        <img class="world__creature" src="${f.creatureImg}" alt="${f.creature}" loading="lazy" />
-        <img class="world__pack" src="${f.packImg}" alt="HydroWild ${f.name}" loading="lazy" />
-      </div>
-      <div class="world__copy" style="direction:ltr">
-        <span class="world__creature-tag" style="color:${f.color}">Guarded by ${f.creature}</span>
-        <h2 class="world__name" style="color:${f.color}">${f.name}</h2>
-        <p class="world__tagline">${f.tagline}</p>
-        <p class="world__lore">${f.lore}</p>
-        <div class="world__actions">
-          <button class="btn btn--primary" data-add="${f.id}">Add to cart</button>
-          <a class="btn btn--ghost" href="/product.html?flavor=${f.id}">Explore</a>
-          <span class="world__price">$${f.price.toFixed(2)}</span>
+  <section class="world${i % 2 ? ' world--rtl' : ''}" id="world-${f.id}" style="background:${f.bg}">
+    <div class="world__inner">
+      <div class="world__ghost">${f.name}</div>
+      <img class="world__creature" src="${f.creatureImg}" alt="${f.creature}" loading="lazy" />
+      <div class="world__content" style="${i % 2 ? 'direction:rtl' : ''}">
+        <div class="world__visual" style="direction:ltr">
+          <img class="world__pack" src="${f.packImg}" alt="HydroWild ${f.name}" loading="lazy" />
+        </div>
+        <div class="world__copy" style="direction:ltr">
+          <span class="world__creature-tag" style="color:${f.color}">Guarded by ${f.creature}</span>
+          <h2 class="world__name" style="color:${f.color}">${f.name}</h2>
+          <p class="world__tagline">${f.tagline}</p>
+          <p class="world__lore">${f.lore}</p>
+          <div class="world__actions">
+            <button class="btn btn--primary" data-add="${f.id}">Add to cart</button>
+            <a class="btn btn--ghost" href="/product.html?flavor=${f.id}">Explore</a>
+            <span class="world__price">$${f.price.toFixed(2)}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -94,8 +148,12 @@ worlds.innerHTML = FLAVORS.map(
 ).join('');
 
 // World scroll choreography
-FLAVORS.forEach((f) => {
+FLAVORS.forEach((f, i) => {
   const el = document.getElementById(`world-${f.id}`);
+  // Rows alternate which side the visual sits on (see .world--rtl in CSS).
+  // Mirror the creature's slide-in direction and the pack's tilt so the
+  // motion always matches which edge is "outer" for that row.
+  const flip = i % 2 ? 1 : -1;
   const creature = el.querySelector('.world__creature');
   const pack = el.querySelector('.world__pack');
   const ghost = el.querySelector('.world__ghost');
@@ -103,18 +161,19 @@ FLAVORS.forEach((f) => {
 
   gsap.fromTo(
     creature,
-    { xPercent: -25, yPercent: -45, scale: 0.85, opacity: 0 },
+    { xPercent: flip * 25, yPercent: -45, scale: 0.85, opacity: 0 },
     {
-      xPercent: 0, yPercent: -50, scale: 1, opacity: 0.95,
-      scrollTrigger: { trigger: el, start: 'top 75%', end: 'center center', scrub: 1 },
+      xPercent: 0, yPercent: -50, scale: 1, opacity: 0.4,
+      ease: 'back.out(1.4)',
+      scrollTrigger: { trigger: el, start: 'top 88%', end: 'top top', scrub: 2.2 },
     }
   );
   gsap.fromTo(
     pack,
-    { yPercent: 30, rotation: -18, opacity: 0 },
+    { yPercent: 30, rotation: flip * 18, opacity: 0 },
     {
-      yPercent: -50, rotation: -6, opacity: 1, ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top 70%', end: 'center center', scrub: 1 },
+      yPercent: -50, rotation: flip * 6, opacity: 1, ease: 'back.out(1.6)',
+      scrollTrigger: { trigger: el, start: 'top 82%', end: 'top top', scrub: 2.2 },
     }
   );
   gsap.to(ghost, {
@@ -125,6 +184,13 @@ FLAVORS.forEach((f) => {
     opacity: 0, y: 36, stagger: 0.09, duration: 0.7,
     scrollTrigger: { trigger: el, start: 'top 55%' },
   });
+  // No pin, no sticky hold. .world is exactly 100svh, so the section
+  // passes through the viewport on native scroll in one continuous move.
+  // The scrub'd tween below still eases the creature/pack toward their
+  // settled position as the section's top crosses 75%→0% of the viewport,
+  // so it reads as a "pull toward center" — but because there's no extra
+  // scroll distance to hold on, it never freezes. It arrives and keeps
+  // gliding straight into the next world.
 });
 
 // Add-to-cart buttons (event delegation)

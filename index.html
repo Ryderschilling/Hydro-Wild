@@ -31,6 +31,7 @@
 
   <!-- ══ HERO ══ -->
   <section class="hero" id="hero">
+    <img src="/assets/img/creature-kraken.png" alt="" class="hero__creature" aria-hidden="true" />
     <div class="hero__bubbles" id="bubbles"></div>
     <div class="hero__inner">
       <p class="hero__eyebrow" data-hero-fade>Zero sugar · Zero dyes · 100% wild</p>
@@ -107,13 +108,25 @@
     </div>
   </section>
 
+  <!-- ══ SPOTTED IN THE WILD ══ -->
+  <section class="wall" id="wall">
+    <div class="wall__head">
+      <p class="section-eyebrow" data-reveal>#GetWild</p>
+      <h2 class="section-title" data-reveal>SPOTTED IN<br /><em>THE WILD.</em></h2>
+      <p class="wall__sub" data-reveal>Real families, real flavors, real chaos. Tag <strong>@hydrowild</strong> to get featured.</p>
+    </div>
+    <div class="wall__strip">
+      <div class="wall__track" id="wallTrack"></div>
+    </div>
+    <a href="https://instagram.com/hydrowild" class="btn btn--primary wall__cta" target="_blank" rel="noopener" data-reveal>Follow @hydrowild</a>
+  </section>
+
   <!-- ══ FINAL CTA ══ -->
   <section class="cta">
     <div class="cta__creatures" aria-hidden="true">
-      <img src="/assets/img/creature-kraken.png" alt="" data-cta-creature />
-      <img src="/assets/img/creature-nessie.png" alt="" data-cta-creature />
-      <img src="/assets/img/creature-yeti.png" alt="" data-cta-creature />
-      <img src="/assets/img/creature-wampus.png" alt="" data-cta-creature />
+      <img src="/assets/img/creature-kraken.png" alt="" class="cta__creature--kraken" data-cta-creature />
+      <img src="/assets/img/creature-nessie.png" alt="" class="cta__creature--nessie" data-cta-creature />
+      <img src="/assets/img/creature-wampus.png" alt="" class="cta__creature--wampus" data-cta-creature />
     </div>
     <h2 class="cta__title" data-reveal>READY TO<br />GET WILD?</h2>
     <p class="cta__sub" data-reveal>Try all 4 flavors. Find your creature.</p>
@@ -122,12 +135,27 @@
 
   <!-- ══ FOOTER ══ -->
   <footer class="footer">
-    <img src="/assets/logos/logo-white.svg" alt="HydroWild" class="footer__logo" />
-    <div class="footer__cols">
-      <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
-      <div><h4>Company</h4><a href="#story">Our Story</a><a href="#science">Clean Ingredients</a><a href="https://hydrowild.com" target="_blank" rel="noopener">Current Site</a></div>
+    <img src="/assets/img/creature-yeti.png" alt="" class="footer__creature" aria-hidden="true" loading="lazy" />
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/assets/logos/logo-white.svg" alt="HydroWild" class="footer__logo" />
+        <p class="footer__tagline">Zero sugar. Zero dyes. Four legendary creatures guarding four flavors.</p>
+        <div class="footer__dots" aria-hidden="true">
+          <span style="background:#29abe2"></span>
+          <span style="background:#4adb14"></span>
+          <span style="background:#ff5d8f"></span>
+          <span style="background:#ff8327"></span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
+        <div><h4>Company</h4><a href="#story">Our Story</a><a href="#science">Clean Ingredients</a><a href="https://hydrowild.com" target="_blank" rel="noopener">Current Site</a></div>
+      </div>
     </div>
-    <p class="footer__note">© 2026 HydroWild. Concept build by Ryder Schilling.</p>
+    <div class="footer__bottom">
+      <p class="footer__note">© 2026 HydroWild. Concept build by Ryder Schilling.</p>
+      <p class="footer__note">Get Wild. Stay Hydrated.</p>
+    </div>
   </footer>
 
   <!-- ══ CART DRAWER (injected by JS) ══ -->

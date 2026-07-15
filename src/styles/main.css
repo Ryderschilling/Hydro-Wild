@@ -127,6 +127,29 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
 }
 .hero__inner { position: relative; z-index: 3; padding: 7rem 1.5rem 4rem; max-width: 900px; }
+
+.hero__creature {
+  /* Background flourish, stationed low and centered — faded and
+     edge-masked so it reads as ambient scenery behind the copy/packs,
+     never a competing subject. Sits below bubbles/packs/copy in the
+     stacking order (z-index 0). */
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: -20%;
+  width: min(70vw, 900px);
+  max-width: none;
+  transform: translateX(-50%);
+  opacity: 0.34;
+  filter: saturate(0.8);
+  /* Centered at the image's own bottom edge so the tentacles stay solid
+     near the hero's floor (hard-cropped by .hero's overflow:hidden) while
+     the head/top fades into the background — reads as surfacing from
+     below rather than floating mid-air. */
+  mask-image: radial-gradient(ellipse 65% 75% at 50% 100%, #000 40%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 75% at 50% 100%, #000 40%, transparent 92%);
+  pointer-events: none;
+}
 .hero__eyebrow {
   font-weight: 700;
   text-transform: uppercase;
@@ -173,10 +196,10 @@ a { color: inherit; text-decoration: none; }
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
   will-change: transform;
 }
-.hero__pack[data-float="1"] { left: 6%; top: 22%; transform: rotate(-12deg); }
-.hero__pack[data-float="2"] { right: 7%; top: 18%; transform: rotate(10deg); }
-.hero__pack[data-float="3"] { left: 12%; bottom: 12%; transform: rotate(8deg); }
-.hero__pack[data-float="4"] { right: 12%; bottom: 15%; transform: rotate(-9deg); }
+.hero__pack[data-float="1"] { left: 6%; top: 14%; transform: rotate(-12deg); }
+.hero__pack[data-float="2"] { right: 7%; top: 10%; transform: rotate(10deg); }
+.hero__pack[data-float="3"] { left: 12%; bottom: 20%; transform: rotate(8deg); }
+.hero__pack[data-float="4"] { right: 12%; bottom: 23%; transform: rotate(-9deg); }
 
 .hero__bubbles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .bubble {
@@ -228,16 +251,13 @@ a { color: inherit; text-decoration: none; }
 .world {
   position: relative;
   min-height: 100svh;
-  display: grid;
-  align-items: center;
-  overflow: hidden;
-  padding: 6rem 0;
   transition: background 0.6s;
 }
 .world__ghost {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: -1;
   transform: translate(-50%, -50%);
   font-family: var(--font-display);
   font-weight: 900;
@@ -251,37 +271,78 @@ a { color: inherit; text-decoration: none; }
   will-change: transform;
 }
 .world__inner {
+  /* Full-bleed box: clips the oversized ghost text to the screen edges.
+     No position:sticky here — .world is the same height as this element,
+     so there's nothing to pin against. Content simply glides through on
+     native scroll (see GSAP scrub choreography in main.js) instead of
+     freezing in place for extra scroll distance. */
   position: relative;
   z-index: 2;
+  height: 100svh;
+  overflow: hidden;
+}
+.world__content {
+  /* Sits above the full-bleed creature (z-index:0 on .world__inner's stacking
+     context) — needs its own stacking context + z-index or the static/in-flow
+     content would paint below the absolutely-positioned creature. */
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
+  height: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  padding: 6rem 2.5rem;
 }
 .world__visual { position: relative; min-height: 480px; }
 .world__creature {
+  /* True full-bleed background flourish: direct child of .world__inner (NOT
+     nested in .world__content/.world__visual), so these percentages are
+     relative to the FULL section width and the image can actually bleed out
+     to the true viewport edge — clipped only by .world__inner's
+     overflow:hidden, with no inner box constraining it. Faded back,
+     desaturated, and edge-masked so it reads as scenery, not a competing
+     subject. Default rules assume the visual/copy-empty side is the LEFT —
+     .world--rtl below mirrors it to the right for alternating rows. */
   position: absolute;
-  width: 115%;
+  width: 46%;
   max-width: none;
-  left: -12%;
+  left: -8%;
   top: 50%;
   transform: translateY(-50%);
-  opacity: 0.95;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+  opacity: 0.45;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.25)) saturate(0.85);
+  mask-image: radial-gradient(ellipse 62% 60% at 42% 50%, #000 50%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 62% 60% at 42% 50%, #000 50%, transparent 92%);
   will-change: transform;
+  z-index: 0;
+  pointer-events: none;
+}
+.world--rtl .world__creature {
+  left: auto;
+  right: -8%;
+  mask-image: radial-gradient(ellipse 62% 60% at 58% 50%, #000 50%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 62% 60% at 58% 50%, #000 50%, transparent 92%);
 }
 .world__pack {
+  /* The hero: shifted up and toward the copy side, sized up so it's the
+     clear focal point instead of being stacked dead-center on the
+     background creature. */
   position: absolute;
-  width: 55%;
-  left: 50%;
-  top: 50%;
+  width: 64%;
+  left: 74%;
+  top: 42%;
   transform: translate(-50%, -50%) rotate(-6deg);
-  filter: drop-shadow(0 35px 55px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.65));
   will-change: transform;
   z-index: 2;
+}
+.world--rtl .world__pack {
+  left: auto;
+  right: 74%;
+  transform: translate(50%, -50%) rotate(6deg);
 }
 .world__copy { max-width: 480px; }
 .world__creature-tag {
@@ -412,6 +473,93 @@ a { color: inherit; text-decoration: none; }
 .story__img { border-radius: 24px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); }
 .story__copy p { color: rgba(255, 255, 255, 0.78); line-height: 1.7; margin-bottom: 2rem; font-size: 1.05rem; }
 
+/* ── Spotted in the Wild (UGC wall) ── */
+.wall { padding: 7rem 0 6rem; background: var(--navy-deep); overflow: hidden; }
+.wall__head { max-width: 640px; margin: 0 auto 3.5rem; padding: 0 1.5rem; text-align: center; }
+.wall__sub { font-family: var(--font-body); font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); margin-top: 0.75rem; }
+.wall__sub strong { color: var(--lime); }
+
+.wall__strip {
+  overflow: hidden;
+  padding: 1.25rem 0 2.5rem;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.wall__track { display: flex; width: max-content; gap: 1.75rem; }
+
+.wall__card {
+  position: relative;
+  width: 240px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  border: 3px solid var(--flavor, var(--cyan));
+  background: var(--navy);
+  transform: rotate(var(--tilt, -3deg));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+.wall__card:nth-child(3n) { --tilt: -4deg; }
+.wall__card:nth-child(3n + 1) { --tilt: 3deg; }
+.wall__card:nth-child(3n + 2) { --tilt: -2deg; }
+.wall__card:hover {
+  transform: rotate(0deg) translateY(-10px) scale(1.04);
+  box-shadow: 0 20px 40px -12px var(--flavor, var(--cyan));
+  z-index: 2;
+}
+
+.wall__badge {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  transform: rotate(12deg);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wall__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 15px; }
+.wall__media img, .wall__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.wall__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  color: #fff;
+  background: rgba(5, 0, 51, 0.25);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.wall__card:hover .wall__play { opacity: 0; }
+
+.wall__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.9rem 1rem 1rem;
+  background: linear-gradient(0deg, rgba(5, 0, 51, 0.95) 20%, rgba(5, 0, 51, 0.65) 65%, transparent 100%);
+  transform: translateY(65%);
+  transition: transform 0.35s ease;
+}
+.wall__card:hover .wall__info { transform: translateY(0); }
+.wall__handle { display: block; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--flavor, var(--cyan)); margin-bottom: 0.25rem; }
+.wall__caption { font-family: var(--font-body); font-size: 0.82rem; line-height: 1.35; color: rgba(255, 255, 255, 0.85); margin-bottom: 0.4rem; }
+.wall__likes { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255, 255, 255, 0.55); }
+
+.wall__cta { display: block; width: max-content; margin: 0 auto; }
+
+@media (max-width: 680px) {
+  .wall__card { width: 190px; }
+  .wall__strip { padding: 0.75rem 0 1.75rem; }
+}
+
 /* ── CTA ── */
 .cta {
   position: relative;
@@ -425,15 +573,14 @@ a { color: inherit; text-decoration: none; }
 .cta__creatures { position: absolute; inset: 0; pointer-events: none; }
 .cta__creatures img {
   position: absolute;
-  width: clamp(120px, 16vw, 240px);
+  width: clamp(140px, 19vw, 280px);
   opacity: 0.5;
   filter: saturate(1.1);
   will-change: transform;
 }
-.cta__creatures img:nth-child(1) { left: 2%; top: 10%; }
-.cta__creatures img:nth-child(2) { right: 3%; top: 14%; }
-.cta__creatures img:nth-child(3) { left: 8%; bottom: 6%; }
-.cta__creatures img:nth-child(4) { right: 9%; bottom: 8%; }
+.cta__creature--kraken { left: 2%; top: 10%; }
+.cta__creature--nessie { right: 3%; top: 14%; }
+.cta__creature--wampus { right: 9%; bottom: 8%; }
 .cta__title {
   position: relative;
   font-family: var(--font-display);
@@ -447,9 +594,57 @@ a { color: inherit; text-decoration: none; }
 .cta__sub { position: relative; font-size: 1.2rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2.5rem; }
 
 /* ── Footer ── */
-.footer { background: #03001f; padding: 4rem 2.5rem 2rem; }
-.footer__logo { height: 44px; width: auto; margin-bottom: 2.5rem; }
-.footer__cols { display: flex; gap: 6rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.footer {
+  position: relative;
+  z-index: 0;
+  background:
+    radial-gradient(900px 500px at 15% 0%, rgba(41, 171, 226, 0.1), transparent 60%),
+    radial-gradient(700px 450px at 90% 100%, rgba(74, 219, 20, 0.08), transparent 55%),
+    #03001f;
+  padding: 4.5rem 2.5rem 2rem;
+  overflow: hidden;
+}
+.footer__creature {
+  position: absolute;
+  z-index: -1;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  width: clamp(150px, 15vw, 230px);
+  opacity: 0.9;
+  filter: saturate(1.05) drop-shadow(0 25px 40px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+}
+.footer::before {
+  /* Brand-color hairline that separates the footer from the CTA section
+     above — otherwise the two dark sections just bleed into one flat slab. */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--lime), var(--pink), var(--orange));
+  opacity: 0.7;
+}
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  flex-wrap: wrap;
+  padding-bottom: 3rem;
+}
+.footer__brand { max-width: 320px; }
+.footer__logo { height: 44px; width: auto; margin-bottom: 1.2rem; }
+.footer__tagline {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 1.4rem;
+}
+.footer__dots { display: flex; gap: 0.6rem; }
+.footer__dots span { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.footer__cols { display: flex; gap: 5rem; flex-wrap: wrap; }
 .footer__cols h4 {
   font-family: var(--font-display);
   font-weight: 900;
@@ -460,6 +655,15 @@ a { color: inherit; text-decoration: none; }
 }
 .footer__cols a { display: block; padding: 0.3rem 0; color: rgba(255, 255, 255, 0.7); transition: color 0.2s; }
 .footer__cols a:hover { color: var(--lime); }
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
 .footer__note { color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; }
 
 /* ── Cart drawer ── */
@@ -533,16 +737,18 @@ a { color: inherit; text-decoration: none; }
   bottom: 2rem;
   left: 50%;
   transform: translate(-50%, 120%);
+  opacity: 0;
+  pointer-events: none;
   background: var(--lime);
   color: var(--navy-deep);
   font-weight: 700;
   padding: 0.9rem 1.8rem;
   border-radius: 999px;
   z-index: 300;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
-.toast.show { transform: translate(-50%, 0); }
+.toast.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
 /* ── Reveal defaults (JS animates in) ── */
 [data-reveal] { opacity: 0; transform: translateY(40px); }
@@ -709,9 +915,15 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
   .nav { padding: 1rem 1.2rem; }
   .nav__links { display: none; }
-  .world__inner, .science__compare, .story__inner, .pdp__inner { grid-template-columns: 1fr; }
+  .world__content, .science__compare, .story__inner, .pdp__inner { grid-template-columns: 1fr; }
   .world__visual { min-height: 380px; }
+  .world { min-height: auto; overflow: hidden; }
+  .world__inner { position: relative; top: auto; height: auto; overflow: visible; }
+  .world__content { height: auto; padding: 4rem 2.5rem; }
   .pdp__gallery { position: static; }
   .hero__pack { width: 80px; }
+  .footer__top { flex-direction: column; gap: 2.5rem; }
   .footer__cols { gap: 3rem; }
+  .footer__bottom { flex-direction: column; align-items: flex-start; }
+  .footer__creature { display: none; }
 }
