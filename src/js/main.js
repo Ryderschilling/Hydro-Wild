@@ -19,22 +19,15 @@ initNav();
 const cartUI = initCartUI();
 
 // ── Hero entrance ──
-gsap.from('[data-hero-word]', {
-  yPercent: 110,
-  duration: 1,
-  stagger: 0.12,
-  ease: 'power4.out',
-  delay: 0.2,
-});
-gsap.from('[data-hero-fade]', { opacity: 0, y: 24, duration: 0.9, stagger: 0.15, delay: 0.7 });
-gsap.from('.hero__pack', {
-  opacity: 0,
-  scale: 0.6,
-  y: 80,
-  duration: 1.1,
-  stagger: 0.1,
-  ease: 'back.out(1.6)',
-  delay: 0.5,
+// ── Hero — smooth whole-section fade in ──
+gsap.set('.hero__inner', { opacity: 0, y: 24 });
+gsap.to('.hero__inner', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15, clearProps: 'transform,opacity' });
+
+gsap.set('.hero__pack', { opacity: 0, y: 40, scale: 0.85 });
+gsap.to('.hero__pack', {
+  opacity: 1, y: 0, scale: 1,
+  stagger: 0.1, duration: 1.0, ease: 'power3.out', delay: 0.5,
+  clearProps: 'transform,opacity',
 });
 
 // Floating packs — infinite drift + scroll parallax
@@ -193,29 +186,16 @@ FLAVORS.forEach((f, i) => {
   // gliding straight into the next world.
 });
 
-// ── Bundle section entrance ──
+// ── Bundle section entrance — single clean block, no child conflicts ──
 if (document.querySelector('.bundle__visual')) {
-  // Kit cluster packs fan in — clearProps lets CSS float animations take over after entrance
-  gsap.from('.bundle__kit-pack', {
-    opacity: 0,
-    y: 50,
-    scale: 0.7,
-    duration: 0.85,
-    stagger: 0.1,
-    ease: 'back.out(1.7)',
-    clearProps: 'transform,opacity',
-    scrollTrigger: { trigger: '.bundle', start: 'top 76%', once: true },
-  });
-
-  // Rows slide in — clearProps removes inline styles so CSS :hover transitions work cleanly
-  gsap.from('.bundle__row', {
-    opacity: 0,
-    x: 40,
-    duration: 0.65,
-    stagger: 0.1,
-    ease: 'power3.out',
-    clearProps: 'transform,opacity',
-    scrollTrigger: { trigger: '.bundle', start: 'top 72%', once: true },
+  gsap.set('.bundle__copy', { opacity: 0, x: -28 });
+  gsap.set('.bundle__visual', { opacity: 0, x: 28 });
+  ScrollTrigger.create({
+    trigger: '.bundle', start: 'top 78%', once: true,
+    onEnter: () => {
+      gsap.to('.bundle__copy', { opacity: 1, x: 0, duration: 0.85, ease: 'power3.out', clearProps: 'transform,opacity' });
+      gsap.to('.bundle__visual', { opacity: 1, x: 0, duration: 0.85, ease: 'power3.out', clearProps: 'transform,opacity', delay: 0.08 });
+    },
   });
 }
 
@@ -324,8 +304,27 @@ if (emailForm) {
 gsap.fromTo(
   '.email-optin__content',
   { opacity: 0, y: 40 },
-  {
-    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.email-optin', start: 'top 75%' },
-  }
+  { opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.email-optin', start: 'top 75%' } }
 );
+
+// Bundle entrance handled above (single block)
+
+// ── Wall section heading ──
+gsap.from('.wall__head', {
+  opacity: 0, y: 30, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.wall', start: 'top 80%', once: true },
+});
+
+// ── Story section (homepage) ──
+gsap.from('.story__img', {
+  opacity: 0, x: -40, scale: 0.94, duration: 0.9, ease: 'power3.out', clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.story', start: 'top 78%', once: true },
+});
+
+// ── Footer stagger ──
+gsap.from('.footer__brand, .footer__cols > div', {
+  opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+  clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.footer', start: 'top 88%', once: true },
+});

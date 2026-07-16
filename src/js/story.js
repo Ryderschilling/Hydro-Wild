@@ -19,6 +19,35 @@ document.querySelectorAll('[data-reveal]').forEach((el) => {
   });
 });
 
+// ── Diff cards stagger — set invisible immediately, fade in on scroll ──
+gsap.set('.spage-diff__card', { opacity: 0, y: 36 });
+gsap.to('.spage-diff__card', {
+  opacity: 1, y: 0, stagger: 0.12, duration: 0.75,
+  ease: 'power3.out', clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.spage-diff__grid', start: 'top 82%', once: true },
+});
+
+// ── Problem visual ──
+gsap.from('.spage-problem__img', {
+  opacity: 0, scale: 0.92, duration: 0.9, ease: 'power3.out',
+  clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.spage-problem__visual', start: 'top 80%', once: true },
+});
+
+// ── Mission quote ──
+gsap.from('.spage-mission__quote', {
+  opacity: 0, y: 20, duration: 1.0, ease: 'power3.out',
+  clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.spage-mission', start: 'top 80%', once: true },
+});
+
+// ── Footer ──
+gsap.from('.footer__brand, .footer__cols > div', {
+  opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+  clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.footer', start: 'top 88%', once: true },
+});
+
 // ── Future section packs float in ──
 const futurePacks = document.querySelectorAll('.spage-future__pack');
 if (futurePacks.length) {

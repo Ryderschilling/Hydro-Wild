@@ -59,30 +59,23 @@ document.getElementById('bundleAddCart')?.addEventListener('click', () => {
 
 // ── Animations ──
 gsap.from('.shop-hero__eyebrow, .shop-hero__title, .shop-hero__sub', {
-  opacity: 0,
-  y: 30,
-  stagger: 0.14,
-  duration: 0.85,
-  ease: 'power3.out',
-  delay: 0.2,
-});
-
-gsap.from('.shop-card', {
-  opacity: 0,
-  y: 60,
-  scale: 0.92,
-  stagger: 0.12,
-  duration: 0.85,
-  ease: 'back.out(1.4)',
-  clearProps: 'transform,opacity',
-  scrollTrigger: { trigger: '.shop-grid', start: 'top 80%', once: true },
+  opacity: 0, y: 30, stagger: 0.14, duration: 0.85,
+  ease: 'power3.out', delay: 0.2, clearProps: 'transform,opacity',
 });
 
 gsap.from('.shop-bundle', {
-  opacity: 0,
-  x: 30,
-  duration: 0.9,
-  ease: 'power3.out',
-  delay: 0.3,
+  opacity: 0, x: 30, duration: 0.9,
+  ease: 'power3.out', delay: 0.25, clearProps: 'transform,opacity',
+});
+
+gsap.from('.shop-card', {
+  opacity: 0, y: 60, scale: 0.92, stagger: 0.12, duration: 0.85,
+  ease: 'back.out(1.4)', clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.shop-grid', start: 'top 80%', once: true },
+});
+
+gsap.from('.footer__brand, .footer__cols > div', {
+  opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
   clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.footer', start: 'top 88%', once: true },
 });

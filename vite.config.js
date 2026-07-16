@@ -10,6 +10,7 @@ export default defineConfig({
         shop: resolve(__dirname, 'shop.html'),
         story: resolve(__dirname, 'story.html'),
         contact: resolve(__dirname, 'contact.html'),
+        ingredients: resolve(__dirname, 'ingredients.html'),
       },
     },
   },

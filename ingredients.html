@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clean Ingredients — HydroWild</title>
+  <meta name="description" content="What's inside HydroWild: a parent's guide to every ingredient. Zero sugar, zero dyes, 7 essential vitamins, 2 key electrolytes." />
+  <link rel="icon" type="image/svg+xml" href="/assets/logos/logo-triangle.svg" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <header class="nav is-scrolled" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/assets/logos/logo-white.svg" alt="HydroWild" />
+    </a>
+    <nav class="nav__links">
+      
+      <a href="/ingredients.html" style="color:var(--lime)">The Science</a>
+      <a href="/story.html">Our Story</a>
+      <a href="/shop.html">Shop</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <button class="nav__cart" id="cartToggle" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
+      <span class="nav__cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="ing-hero">
+    <div class="ing-hero__glow" aria-hidden="true"></div>
+    <img src="/assets/img/creature-yeti.png" alt="" class="ing-hero__creature" aria-hidden="true" />
+    <div class="ing-hero__inner">
+      <p class="ing-hero__eyebrow" data-reveal>A parent's guide to every ingredient</p>
+      <h1 class="ing-hero__title" data-reveal>NATURALLY GOOD.<br /><em>WILDLY DELICIOUS.</em></h1>
+      <p class="ing-hero__sub" data-reveal>HydroWild is a zero-sugar, zero-dye kids hydration drink mix. 7 essential vitamins, 2 key electrolytes, no artificial anything — sweetened with stevia. Here's exactly what's inside and why it matters.</p>
+    </div>
+  </section>
+
+  <!-- ══ STAT STRIP ══ -->
+  <div class="ing-stats">
+    <div class="ing-stat" data-reveal>
+      <span class="ing-stat__num">0<span class="ing-stat__unit">g</span></span>
+      <span class="ing-stat__label">Sugar. Ever.</span>
+    </div>
+    <div class="ing-stat" data-reveal>
+      <span class="ing-stat__num">7</span>
+      <span class="ing-stat__label">Essential Vitamins</span>
+    </div>
+    <div class="ing-stat" data-reveal>
+      <span class="ing-stat__num">2</span>
+      <span class="ing-stat__label">Key Electrolytes</span>
+    </div>
+    <div class="ing-stat" data-reveal>
+      <span class="ing-stat__num">0</span>
+      <span class="ing-stat__label">Artificial Dyes</span>
+    </div>
+    <div class="ing-stat" data-reveal>
+      <span class="ing-stat__num">0<span class="ing-stat__unit">mg</span></span>
+      <span class="ing-stat__label">Sodium</span>
+    </div>
+  </div>
+
+  <!-- ══ ELECTROLYTES ══ -->
+  <section class="ing-section">
+    <div class="ing-section__inner">
+      <p class="section-eyebrow" data-reveal>Electrolytes</p>
+      <h2 class="section-title" data-reveal>HYDRATION WITHOUT<br /><em>THE SALT BOMB.</em></h2>
+      <p class="ing-section__sub" data-reveal>Most kids' sports drinks are loaded with sodium. HydroWild skips it entirely — the two electrolytes that actually matter for hydration are magnesium and potassium.</p>
+      <div class="ing-card-grid ing-card-grid--2" style="margin-top:3rem">
+        <div class="ing-card" style="--ing-color:#29ABE2">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(41,171,226,0.15);color:#29ABE2">Electrolyte</span>
+            <span class="ing-card__dv" style="color:#29ABE2">24% DV</span>
+          </div>
+          <h3 class="ing-card__name">Magnesium</h3>
+          <p class="ing-card__role">Muscle, Energy &amp; Sleep Support</p>
+          <p class="ing-card__desc">Magnesium supports muscle contractions, energy production, and quality sleep — three things active kids burn through fast. Most kids don't get enough from diet alone.</p>
+        </div>
+        <div class="ing-card" style="--ing-color:#4ADB14">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(74,219,20,0.15);color:#4ADB14">Electrolyte</span>
+            <span class="ing-card__dv" style="color:#4ADB14">Primary</span>
+          </div>
+          <h3 class="ing-card__name">Potassium</h3>
+          <p class="ing-card__role">Hydration Without the Sodium</p>
+          <p class="ing-card__desc">Potassium regulates fluid balance and supports muscle function. It's the electrolyte your body actually needs for real hydration — without the bloating that comes from excess sodium.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VITAMINS ══ -->
+  <section class="ing-section ing-section--alt">
+    <div class="ing-section__inner">
+      <p class="section-eyebrow" data-reveal>The Vitamin Stack</p>
+      <h2 class="section-title" data-reveal>BUILT IN A LAB.<br /><em>BORN IN THE WILD.</em></h2>
+      <p class="ing-section__sub" data-reveal>Seven essential vitamins in every stick. Not a random blend — each one chosen for what active, growing kids actually need every day.</p>
+      <div class="ing-card-grid ing-card-grid--3" style="margin-top:3rem">
+
+        <div class="ing-card" style="--ing-color:#FF3ECD">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(255,62,205,0.15);color:#FF3ECD">Vitamin</span>
+            <span class="ing-card__dv" style="color:#FF3ECD">67% DV</span>
+          </div>
+          <h3 class="ing-card__name">Vitamin A</h3>
+          <p class="ing-card__role">Vision &amp; Immune Support</p>
+          <p class="ing-card__desc">As retinyl palmitate — the most bioavailable form. Supports vision, immune function, and healthy skin cell turnover in growing kids.</p>
+        </div>
+
+        <div class="ing-card" style="--ing-color:#FF8327">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(255,131,39,0.15);color:#FF8327">Vitamin</span>
+            <span class="ing-card__dv" style="color:#FF8327">44% DV</span>
+          </div>
+          <h3 class="ing-card__name">Vitamin C</h3>
+          <p class="ing-card__role">Immune &amp; Collagen Support</p>
+          <p class="ing-card__desc">A classic for good reason. Vitamin C supports the immune system, helps build collagen for growing bones and muscles, and boosts iron absorption.</p>
+        </div>
+
+        <div class="ing-card" style="--ing-color:#FFE600">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(255,230,0,0.15);color:#FFE600">Vitamin</span>
+            <span class="ing-card__dv" style="color:#FFE600">100% DV</span>
+          </div>
+          <h3 class="ing-card__name">Vitamin B6</h3>
+          <p class="ing-card__role">Energy &amp; Brain Support</p>
+          <p class="ing-card__desc">A full daily value of B6 in every stick. Supports brain development, mood regulation, energy metabolism, and immune function — critical for school-age kids.</p>
+        </div>
+
+        <div class="ing-card" style="--ing-color:#29ABE2">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(41,171,226,0.15);color:#29ABE2">Vitamin</span>
+            <span class="ing-card__dv" style="color:#29ABE2">Active Form</span>
+          </div>
+          <h3 class="ing-card__name">Vitamin B12</h3>
+          <p class="ing-card__role">Energy &amp; Nervous System Support</p>
+          <p class="ing-card__desc">As methylcobalamin — the most active and absorbable form of B12. Supports red blood cell formation, energy production, and nervous system health.</p>
+        </div>
+
+        <div class="ing-card" style="--ing-color:#4ADB14">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(74,219,20,0.15);color:#4ADB14">Vitamin</span>
+            <span class="ing-card__dv" style="color:#4ADB14">D3 Form</span>
+          </div>
+          <h3 class="ing-card__name">Vitamin D</h3>
+          <p class="ing-card__role">Bone Health &amp; Immunity</p>
+          <p class="ing-card__desc">As cholecalciferol (D3) — the form your body actually uses. Supports calcium absorption for strong bones, immune function, and mood. Most kids are deficient.</p>
+        </div>
+
+        <div class="ing-card" style="--ing-color:#FF8327">
+          <div class="ing-card__header">
+            <span class="ing-card__badge" style="background:rgba(255,131,39,0.15);color:#FF8327">Vitamin</span>
+            <span class="ing-card__dv" style="color:#FF8327">50% DV</span>
+          </div>
+          <h3 class="ing-card__name">Folate (B9)</h3>
+          <p class="ing-card__role">Healthy Growth &amp; Cell Development</p>
+          <p class="ing-card__desc">Folate supports DNA synthesis and cell division — essential for rapidly growing kids. Half a daily value in every stick, in the natural food form your body prefers.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SWEETENER CALLOUT ══ -->
+  <section class="ing-stevia">
+    <div class="ing-stevia__inner" data-reveal>
+      <div class="ing-stevia__copy">
+        <p class="section-eyebrow">The Sweetener</p>
+        <h2 class="section-title">SWEET WITHOUT<br /><em>THE SUGAR.</em></h2>
+        <p class="spage-body">HydroWild is sweetened with stevia (Reb A) — a natural, plant-based sweetener with zero calories and zero glycemic impact. No aspartame, no sucralose, no sugar alcohols.</p>
+        <p class="spage-body">Kids get the sweetness they love. Parents get the clean label they need. No catch.</p>
+      </div>
+      <div class="ing-stevia__visual">
+        <img src="/assets/img/nutrient-focused.png" alt="HydroWild nutrients" class="ing-stevia__img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="ing-faq">
+    <div class="ing-faq__inner">
+      <p class="section-eyebrow" data-reveal>Common Questions</p>
+      <h2 class="section-title" data-reveal>PARENTS ASK.<br /><em>WE ANSWER.</em></h2>
+      <div class="ing-acc" id="faqAcc" data-reveal>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">Is HydroWild vegan?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>Yes. HydroWild is fully vegan. No animal-derived ingredients anywhere in the formula.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">What age is HydroWild for?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>HydroWild is recommended for kids 4 and up. The vitamin and electrolyte levels are calibrated for school-age children through teens.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">Does it contain caffeine?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>Zero caffeine. Always. HydroWild is a hydration drink — not an energy drink. It is 100% caffeine-free and safe for kids.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">How does it compare to Gatorade?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>A standard Gatorade has 34g of sugar, artificial dyes, and 270mg of sodium per bottle. HydroWild has 0g sugar, no artificial dyes, and 0mg sodium — plus 7 vitamins Gatorade doesn't include at all.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">Are there any allergens?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>HydroWild is free of the major 9 allergens: no gluten, dairy, eggs, soy, peanuts, tree nuts, fish, shellfish, or sesame. Always check the label for the most current information.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">Where is it made?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>HydroWild is manufactured in the USA and third-party tested for purity and potency. Every batch is verified before it ships.</p></div>
+        </div>
+
+        <div class="ing-acc__item">
+          <button class="ing-acc__head">How often can kids drink it?<span class="ing-acc__icon">+</span></button>
+          <div class="ing-acc__body"><p>HydroWild is designed for daily use. One stick per day mixed into 12–16oz of water is the recommended serving for kids. It can replace sugary drinks at meals, after school, or during activity.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <section class="cta">
+    <div class="cta__creatures" aria-hidden="true">
+      <img src="/assets/img/creature-kraken.png" alt="" class="cta__creature--kraken" data-cta-creature />
+      <img src="/assets/img/creature-nessie.png" alt="" class="cta__creature--nessie" data-cta-creature />
+      <img src="/assets/img/creature-wampus.png" alt="" class="cta__creature--wampus" data-cta-creature />
+    </div>
+    <h2 class="cta__title" data-reveal>READY TO<br />GET WILD?</h2>
+    <p class="cta__sub" data-reveal>Try all 4 flavors. Find your creature.</p>
+    <a href="/shop.html" class="btn btn--primary btn--xl" data-reveal>Shop All Flavors</a>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <img src="/assets/img/creature-yeti.png" alt="" class="footer__creature" aria-hidden="true" loading="lazy" />
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/assets/logos/logo-white.svg" alt="HydroWild" class="footer__logo" />
+        <p class="footer__tagline">Zero sugar. Zero dyes. Four legendary creatures guarding four flavors.</p>
+        <div class="footer__dots" aria-hidden="true">
+          <span style="background:#29ABE2"></span>
+          <span style="background:#4ADB14"></span>
+          <span style="background:#FF3ECD"></span>
+          <span style="background:#FF8327"></span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
+        <div><h4>Company</h4><a href="/story.html">Our Story</a><a href="/ingredients.html">Clean Ingredients</a><a href="/shop.html">Shop All</a><a href="/contact.html">Contact</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__note">© 2026 HydroWild. Concept build by Ryder Schilling.</p>
+      <p class="footer__note">Get Wild. Stay Hydrated.</p>
+    </div>
+  </footer>
+
+  <div id="cartRoot"></div>
+  <script type="module" src="/src/js/ingredients.js"></script>
+</body>
+</html>

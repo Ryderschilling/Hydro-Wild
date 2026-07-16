@@ -14,10 +14,11 @@
       <img src="/assets/logos/logo-white.svg" alt="HydroWild" />
     </a>
     <nav class="nav__links">
-      <a href="/#flavors">Flavors</a>
-      <a href="/#science">The Science</a>
+      
+      <a href="/ingredients.html">The Science</a>
       <a href="/story.html" style="color:var(--lime)">Our Story</a>
       <a href="/shop.html">Shop</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <button class="nav__cart" id="cartToggle" aria-label="Open cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
@@ -141,6 +142,31 @@
   </section>
 
   <!-- ══ CART DRAWER ══ -->
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <img src="/assets/img/creature-yeti.png" alt="" class="footer__creature" aria-hidden="true" loading="lazy" />
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/assets/logos/logo-white.svg" alt="HydroWild" class="footer__logo" />
+        <p class="footer__tagline">Zero sugar. Zero dyes. Four legendary creatures guarding four flavors.</p>
+        <div class="footer__dots" aria-hidden="true">
+          <span style="background:#29ABE2"></span>
+          <span style="background:#4ADB14"></span>
+          <span style="background:#FF3ECD"></span>
+          <span style="background:#FF8327"></span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
+        <div><h4>Company</h4><a href="/story.html">Our Story</a><a href="/ingredients.html">Clean Ingredients</a><a href="/shop.html">Shop All</a><a href="/contact.html">Contact</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__note">© 2026 HydroWild. Concept build by Ryder Schilling.</p>
+      <p class="footer__note">Get Wild. Stay Hydrated.</p>
+    </div>
+  </footer>
+
   <div id="cartRoot"></div>
 
   <script type="module" src="/src/js/story.js"></script>

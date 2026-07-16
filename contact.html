@@ -14,10 +14,11 @@
       <img src="/assets/logos/logo-white.svg" alt="HydroWild" />
     </a>
     <nav class="nav__links">
-      <a href="/#flavors">Flavors</a>
-      <a href="/#science">The Science</a>
+      
+      <a href="/ingredients.html">The Science</a>
       <a href="/story.html">Our Story</a>
       <a href="/shop.html">Shop</a>
+      <a href="/contact.html" style="color:var(--lime)">Contact</a>
     </nav>
     <button class="nav__cart" id="cartToggle" aria-label="Open cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
@@ -43,39 +44,39 @@
 
       <!-- Left: form -->
       <div class="contact-form-wrap" data-reveal>
-        <form class="contact-form" id="contactForm" novalidate>
+        <form class="contact-form" id="contactForm">
           <div class="contact-form__row">
             <div class="contact-field">
               <label class="contact-field__label" for="cf-name">Your Name</label>
-              <input class="contact-field__input" id="cf-name" type="text" placeholder="First Last" autocomplete="name" required />
+              <input class="contact-field__input" id="cf-name" name="name" type="text" placeholder="First Last" autocomplete="name" required />
             </div>
             <div class="contact-field">
               <label class="contact-field__label" for="cf-email">Email Address</label>
-              <input class="contact-field__input" id="cf-email" type="email" placeholder="you@email.com" autocomplete="email" required />
+              <input class="contact-field__input" id="cf-email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required />
             </div>
           </div>
           <div class="contact-field">
             <label class="contact-field__label" for="cf-subject">What's this about?</label>
-            <select class="contact-field__input contact-field__select" id="cf-subject" required>
+            <select class="contact-field__input contact-field__select" id="cf-subject" name="subject" required>
               <option value="" disabled selected>Select a topic</option>
-              <option value="general">General Question</option>
-              <option value="wholesale">Wholesale / Retail</option>
-              <option value="press">Press &amp; Media</option>
-              <option value="partnership">Partnerships</option>
-              <option value="other">Something Else</option>
+              <option value="General Question">General Question</option>
+              <option value="Wholesale / Retail">Wholesale / Retail</option>
+              <option value="Press &amp; Media">Press &amp; Media</option>
+              <option value="Partnership">Partnership</option>
+              <option value="Something Else">Something Else</option>
             </select>
           </div>
           <div class="contact-field">
             <label class="contact-field__label" for="cf-message">Message</label>
-            <textarea class="contact-field__input contact-field__textarea" id="cf-message" placeholder="Tell us what's on your mind..." rows="5" required></textarea>
+            <textarea class="contact-field__input contact-field__textarea" id="cf-message" name="message" placeholder="Tell us what's on your mind..." rows="5" required></textarea>
           </div>
-          <button type="submit" class="btn btn--primary btn--xl contact-form__submit">
+          <button type="submit" class="btn btn--primary btn--xl contact-form__submit" id="contactSubmit">
             <span class="contact-form__submit-text">Send It</span>
             <svg class="contact-form__submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>
 
-        <!-- Success state -->
+        <!-- Success — shown after real Formspree confirmation -->
         <div class="contact-success" id="contactSuccess" hidden>
           <div class="contact-success__icon">✦</div>
           <h3 class="contact-success__title">Message sent.</h3>

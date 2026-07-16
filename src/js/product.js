@@ -1,9 +1,13 @@
 // Product page — flavor loaded from ?flavor= param, defaults to blue-raspberry.
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FLAVORS, getFlavor } from '../data/products.js';
 import { cart } from '../lib/cart.js';
-import { initCartUI } from './ui.js';
+import { initCartUI, initNav } from './ui.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
+initNav();
 const cartUI = initCartUI();
 
 const params = new URLSearchParams(location.search);
@@ -81,7 +85,21 @@ document.getElementById('moreGrid').innerHTML = FLAVORS.filter((f) => f.id !== f
   )
   .join('');
 
-// ── Entrance animation ──
-gsap.from('.pdp__gallery', { opacity: 0, x: -40, duration: 0.8, ease: 'power3.out' });
-gsap.from('.pdp__info > *', { opacity: 0, y: 26, stagger: 0.07, duration: 0.7, ease: 'power3.out', delay: 0.15 });
+// ── Entrance animations ──
+gsap.from('.pdp__gallery', { opacity: 0, x: -40, duration: 0.9, ease: 'power3.out', clearProps: 'transform,opacity' });
+gsap.from('.pdp__info > *', { opacity: 0, y: 28, stagger: 0.08, duration: 0.75, ease: 'power3.out', delay: 0.15, clearProps: 'transform,opacity' });
 gsap.to('#creatureBg', { yPercent: -6, xPercent: 4, duration: 5, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+
+// ── Other flavors cards stagger ──
+gsap.from('.flavor-card', {
+  opacity: 0, y: 40, scale: 0.94, stagger: 0.12, duration: 0.75,
+  ease: 'back.out(1.4)', clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '#moreGrid', start: 'top 82%', once: true },
+});
+
+// ── Footer stagger ──
+gsap.from('.footer__brand, .footer__cols > div', {
+  opacity: 0, y: 30, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+  clearProps: 'transform,opacity',
+  scrollTrigger: { trigger: '.footer', start: 'top 88%', once: true },
+});
