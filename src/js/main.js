@@ -73,13 +73,13 @@ gsap.to('#marqueeTrack', { xPercent: -50, duration: 22, repeat: -1, ease: 'none'
 // HydroWild product/lifestyle assets today, swap for live IG Graph API data
 // once they grant access.
 const WALL_POSTS = [
-  { type: 'image', src: '/assets/img/lifestyle-2.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@sadie.olivia', caption: 'Back to school survival kit 💙', likes: 342 },
-  { type: 'video', src: '/assets/video/brand-video.mp4', poster: '/assets/video/brand-video-poster.jpg', color: '#4adb14', creatureImg: '/assets/img/creature-nessie.png', handle: '@coach_marcus', caption: 'Halftime hydration check ✅', likes: 891 },
-  { type: 'image', src: '/assets/img/pack-watermelon.png', color: '#4adb14', creatureImg: '/assets/img/creature-nessie.png', handle: '@thefitmomlife', caption: 'Watermelon > everything else in this house', likes: 567 },
-  { type: 'image', src: '/assets/img/lifestyle-3.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@jaxon.does.sports', caption: 'Pre-game ritual 🔵', likes: 423 },
-  { type: 'image', src: '/assets/img/pack-strawberry-lemonade.png', color: '#ff5d8f', creatureImg: '/assets/img/creature-yeti.png', handle: '@averyandthekids', caption: 'The yeti made them drink it, not me', likes: 612 },
-  { type: 'image', src: '/assets/img/lifestyle-4.png', color: '#29abe2', creatureImg: '/assets/img/creature-kraken.png', handle: '@beachdaywithkids', caption: 'Sunglasses on, HydroWild in hand', likes: 289 },
-  { type: 'image', src: '/assets/img/pack-fruit-punch.png', color: '#ff8327', creatureImg: '/assets/img/creature-wampus.png', handle: '@travel_with_tanner', caption: 'Road trip essential 🧡', likes: 754 },
+  { type: 'image', src: '/assets/img/lifestyle-1.png', color: '#29ABE2', creatureImg: '/assets/img/creature-yeti.png', handle: '@sadie.olivia', caption: 'Back to school survival kit 💙', likes: 342 },
+  { type: 'video', src: '/assets/video/brand-video.mp4', poster: '/assets/video/brand-video-poster.jpg', color: '#4ADB14', creatureImg: '/assets/img/creature-wampus.png', handle: '@coach_marcus', caption: 'Halftime hydration check ✅', likes: 891 },
+  { type: 'image', src: '/assets/img/lifestyle-4.png', color: '#4ADB14', creatureImg: '/assets/img/creature-wampus.png', handle: '@thefitmomlife', caption: 'Watermelon > everything else in this house 🍉', likes: 567 },
+  { type: 'image', src: '/assets/img/lifestyle-2.png', color: '#29ABE2', creatureImg: '/assets/img/creature-yeti.png', handle: '@jaxon.does.sports', caption: 'Pre-game ritual 🔵', likes: 423 },
+  { type: 'image', src: '/assets/img/lifestyle-3.png', color: '#FF3ECD', creatureImg: '/assets/img/creature-nessie.png', handle: '@averyandthekids', caption: 'Nessie made them drink it, not me 🍋', likes: 612 },
+  { type: 'image', src: '/assets/img/pack-strawberry-lemonade.png', color: '#FF3ECD', creatureImg: '/assets/img/creature-nessie.png', handle: '@beachdaywithkids', caption: 'Sunglasses on, HydroWild in hand', likes: 289 },
+  { type: 'image', src: '/assets/img/pack-fruit-punch.png', color: '#E80011', creatureImg: '/assets/img/creature-kraken.png', handle: '@travel_with_tanner', caption: 'Road trip essential 🧡', likes: 754 },
 ];
 
 const wallTrack = document.getElementById('wallTrack');

@@ -1,18 +1,117 @@
 /* ═══════════════════════════════════════════════
    HYDROWILD — immersive headless frontend
-   Brand: cyan #29abe2 · lime #4adb14 · navy #09005e · orange #ff8327
+   Brand fonts: Purista (headlines) · Azo Sans (body)
+   Full palette from HW-0019 brand style guide
    ═══════════════════════════════════════════════ */
 
+/* ── Purista ── */
+@font-face {
+  font-family: 'Purista';
+  src: url('/fonts/Purista-BoldItalic.woff2') format('woff2'),
+       url('/fonts/Purista-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Purista';
+  src: url('/fonts/Purista-Bold.woff2') format('woff2'),
+       url('/fonts/Purista-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Purista';
+  src: url('/fonts/Purista-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Purista';
+  src: url('/fonts/Purista-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Purista';
+  src: url('/fonts/Purista-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Azo Sans ── */
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-Bold.woff2') format('woff2'),
+       url('/fonts/AzoSans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azo Sans';
+  src: url('/fonts/AzoSans-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --cyan: #29abe2;
-  --lime: #4adb14;
-  --navy: #09005e;
+  /* ── Brand Colors (HW-0019) ── */
+  --hw-midnight-blue: #09005E;
+  --hw-berry-blue:    #0269B7;
+  --hw-wild-blue:     #29ABE2;
+  --hw-rad-red:       #E80011;
+  --hw-punchy-pink:   #FF3ECD;
+  --hw-orange:        #FF8327;
+  --hw-lemon-yellow:  #FFE600;
+  --hw-lime-green:    #4ADB14;
+  --hw-leafy-green:   #007B34;
+  --white:            #ffffff;
+
+  /* ── Aliases for existing component use ── */
+  --cyan:      var(--hw-wild-blue);
+  --lime:      var(--hw-lime-green);
+  --navy:      var(--hw-midnight-blue);
   --navy-deep: #050033;
-  --orange: #ff8327;
-  --pink: #ff5d8f;
-  --white: #ffffff;
-  --font-display: 'Archivo', sans-serif;
-  --font-body: 'Barlow', sans-serif;
+  --orange:    var(--hw-orange);
+  --pink:      var(--hw-punchy-pink);
+
+  /* ── Typography ── */
+  --font-display: 'Purista', 'Futura', 'Century Gothic', sans-serif;
+  --font-body:    'Azo Sans', 'Proxima Nova', 'Helvetica Neue', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
