@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — HydroWild</title>
+  <meta name="description" content="Get in touch with HydroWild. Questions, wholesale, press, or partnerships — we want to hear from you." />
+  <link rel="icon" type="image/svg+xml" href="/assets/logos/logo-triangle.svg" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <header class="nav is-scrolled" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/assets/logos/logo-white.svg" alt="HydroWild" />
+    </a>
+    <nav class="nav__links">
+      <a href="/#flavors">Flavors</a>
+      <a href="/#science">The Science</a>
+      <a href="/story.html">Our Story</a>
+      <a href="/shop.html">Shop</a>
+    </nav>
+    <button class="nav__cart" id="cartToggle" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
+      <span class="nav__cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <!-- ══ CONTACT HERO ══ -->
+  <section class="contact-hero">
+    <div class="contact-hero__creature" aria-hidden="true">
+      <img src="/assets/img/creature-kraken.png" alt="" />
+    </div>
+    <div class="contact-hero__inner">
+      <p class="contact-hero__eyebrow" data-reveal>We don't bite. Usually.</p>
+      <h1 class="contact-hero__title" data-reveal>LET'S<br /><em>GET WILD.</em></h1>
+      <p class="contact-hero__sub" data-reveal>Questions, wholesale, press, partnerships — drop us a line and we'll get back to you faster than the Kraken surfaces.</p>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT BODY ══ -->
+  <section class="contact-body">
+    <div class="contact-body__inner">
+
+      <!-- Left: form -->
+      <div class="contact-form-wrap" data-reveal>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="contact-form__row">
+            <div class="contact-field">
+              <label class="contact-field__label" for="cf-name">Your Name</label>
+              <input class="contact-field__input" id="cf-name" type="text" placeholder="First Last" autocomplete="name" required />
+            </div>
+            <div class="contact-field">
+              <label class="contact-field__label" for="cf-email">Email Address</label>
+              <input class="contact-field__input" id="cf-email" type="email" placeholder="you@email.com" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="contact-field">
+            <label class="contact-field__label" for="cf-subject">What's this about?</label>
+            <select class="contact-field__input contact-field__select" id="cf-subject" required>
+              <option value="" disabled selected>Select a topic</option>
+              <option value="general">General Question</option>
+              <option value="wholesale">Wholesale / Retail</option>
+              <option value="press">Press &amp; Media</option>
+              <option value="partnership">Partnerships</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+          <div class="contact-field">
+            <label class="contact-field__label" for="cf-message">Message</label>
+            <textarea class="contact-field__input contact-field__textarea" id="cf-message" placeholder="Tell us what's on your mind..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--xl contact-form__submit">
+            <span class="contact-form__submit-text">Send It</span>
+            <svg class="contact-form__submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+
+        <!-- Success state -->
+        <div class="contact-success" id="contactSuccess" hidden>
+          <div class="contact-success__icon">✦</div>
+          <h3 class="contact-success__title">Message sent.</h3>
+          <p class="contact-success__sub">The Kraken is delivering it as we speak. We'll be in touch soon.</p>
+          <button class="btn btn--ghost" id="contactReset">Send another</button>
+        </div>
+      </div>
+
+      <!-- Right: info cards -->
+      <div class="contact-info" data-reveal>
+        <div class="contact-info__card">
+          <span class="contact-info__icon" style="color:var(--hw-wild-blue)">✉</span>
+          <h4>Email Us</h4>
+          <p>hello@hydrowild.com</p>
+        </div>
+        <div class="contact-info__card">
+          <span class="contact-info__icon" style="color:var(--hw-punchy-pink)">◈</span>
+          <h4>Follow the Wild</h4>
+          <p><a href="https://instagram.com/hydrowild" target="_blank" rel="noopener">@hydrowild</a> on Instagram</p>
+        </div>
+        <div class="contact-info__card">
+          <span class="contact-info__icon" style="color:var(--hw-lime-green)">◉</span>
+          <h4>Based In</h4>
+          <p>Birmingham, Alabama<br />Founded 2022</p>
+        </div>
+        <div class="contact-info__card contact-info__card--highlight">
+          <span class="contact-info__icon" style="color:var(--hw-lemon-yellow)">★</span>
+          <h4>Wholesale &amp; Retail</h4>
+          <p>Interested in carrying HydroWild in your store? Select <strong>Wholesale / Retail</strong> in the form and tell us about your business.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <img src="/assets/img/creature-yeti.png" alt="" class="footer__creature" aria-hidden="true" loading="lazy" />
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/assets/logos/logo-white.svg" alt="HydroWild" class="footer__logo" />
+        <p class="footer__tagline">Zero sugar. Zero dyes. Four legendary creatures guarding four flavors.</p>
+        <div class="footer__dots" aria-hidden="true">
+          <span style="background:#29ABE2"></span>
+          <span style="background:#4ADB14"></span>
+          <span style="background:#FF3ECD"></span>
+          <span style="background:#FF8327"></span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
+        <div><h4>Company</h4><a href="/story.html">Our Story</a><a href="/#science">Clean Ingredients</a><a href="/shop.html">Shop All</a><a href="/contact.html">Contact</a></div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__note">© 2026 HydroWild. Concept build by Ryder Schilling.</p>
+      <p class="footer__note">Get Wild. Stay Hydrated.</p>
+    </div>
+  </footer>
+
+  <div id="cartRoot"></div>
+  <script type="module" src="/src/js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop All Flavors — HydroWild</title>
+  <meta name="description" content="Shop all HydroWild zero-sugar hydration flavors. Blue Raspberry, Watermelon, Strawberry Lemonade, and Fruit Punch." />
+  <link rel="icon" type="image/svg+xml" href="/assets/logos/logo-triangle.svg" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <header class="nav is-scrolled" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/assets/logos/logo-white.svg" alt="HydroWild" />
+    </a>
+    <nav class="nav__links">
+      <a href="/#flavors">Flavors</a>
+      <a href="/#science">The Science</a>
+      <a href="/story.html">Our Story</a>
+      <a href="/shop.html" style="color:var(--lime)">Shop</a>
+    </nav>
+    <button class="nav__cart" id="cartToggle" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
+      <span class="nav__cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <!-- ══ SHOP HERO ══ -->
+  <section class="shop-hero">
+    <div class="shop-hero__inner">
+      <p class="shop-hero__eyebrow">Zero sugar · Zero dyes · 100% wild</p>
+      <h1 class="shop-hero__title">PICK YOUR<br /><em>CREATURE.</em></h1>
+      <p class="shop-hero__sub">Four legendary flavors. Four mythic creatures. All-day hydration with zero compromise.</p>
+    </div>
+  </section>
+
+  <!-- ══ SHOP LAYOUT: products left · sticky bundle right ══ -->
+  <section class="shop-layout">
+
+    <!-- Left: 2×2 product grid -->
+    <div class="shop-products">
+      <div class="shop-grid" id="shopGrid"></div>
+    </div>
+
+    <!-- Right: sticky bundle panel -->
+    <aside class="shop-sidebar">
+      <div class="shop-bundle" id="shopBundle">
+        <div class="shop-bundle__cluster">
+          <img src="/assets/img/pack-blue-raspberry.png" alt="" class="shop-bundle__pack" data-bki="0" />
+          <img src="/assets/img/pack-watermelon.png" alt="" class="shop-bundle__pack" data-bki="1" />
+          <img src="/assets/img/pack-strawberry-lemonade.png" alt="" class="shop-bundle__pack" data-bki="2" />
+          <img src="/assets/img/pack-fruit-punch.png" alt="" class="shop-bundle__pack" data-bki="3" />
+        </div>
+        <div class="shop-bundle__copy">
+          <p class="shop-bundle__eyebrow">Can't decide?</p>
+          <h2 class="shop-bundle__title">WILD<br /><em>VARIETY</em><br />PACK</h2>
+          <p class="shop-bundle__sub">All 4 flavors. All 4 creatures. One box.</p>
+          <ul class="shop-bundle__perks">
+            <li>✦ 30 packets total</li>
+            <li>✦ Zero sugar &amp; zero dyes</li>
+            <li>✦ 9 essential vitamins</li>
+          </ul>
+          <p class="shop-bundle__price">$14.99</p>
+          <button class="btn btn--primary" style="width:100%;justify-content:center;display:block;text-align:center;" id="bundleAddCart">Add to Cart</button>
+        </div>
+      </div>
+    </aside>
+
+  </section>
+
+  <!-- ══ CART DRAWER ══ -->
+  <div id="cartRoot"></div>
+
+  <script type="module" src="/src/js/shop.js"></script>
+</body>
+</html>

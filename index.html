@@ -18,8 +18,8 @@
     <nav class="nav__links">
       <a href="#flavors">Flavors</a>
       <a href="#science">The Science</a>
-      <a href="#story">Our Story</a>
-      <a href="/product.html?flavor=blue-raspberry">Shop</a>
+      <a href="/story.html">Our Story</a>
+      <a href="/shop.html">Shop</a>
     </nav>
     <button class="nav__cart" id="cartToggle" aria-label="Open cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
@@ -40,7 +40,7 @@
       <p class="hero__sub" data-hero-fade>Science-backed hydration for kids &amp; teens. 9 essential vitamins, electrolytes, nothing artificial — and a legendary creature in every flavor.</p>
       <div class="hero__cta" data-hero-fade>
         <a href="#flavors" class="btn btn--primary">Meet the flavors</a>
-        <a href="/product.html?flavor=blue-raspberry" class="btn btn--ghost">Shop now</a>
+        <a href="/shop.html" class="btn btn--ghost">Shop now</a>
       </div>
     </div>
     <div class="hero__packs" aria-hidden="true">
@@ -59,6 +59,62 @@
       <span>NO SUGAR ✦ NO DYES ✦ ELECTROLYTES ✦ 9 ESSENTIAL VITAMINS ✦ KID-APPROVED ✦ SCIENCE-BACKED ✦ THE CALL OF THE WILD ✦&nbsp;</span>
     </div>
   </div>
+
+  <!-- ══ BUNDLE SPOTLIGHT ══ -->
+  <section class="bundle" id="bundle">
+    <div class="bundle__inner">
+      <!-- Copy -->
+      <div class="bundle__copy">
+        <p class="bundle__eyebrow" data-reveal>The full collection</p>
+        <h2 class="bundle__title" data-reveal>GET ALL 4.<br /><em>MEET EVERY CREATURE.</em></h2>
+        <p class="bundle__sub" data-reveal>One box. Four legendary flavors. Four mythic creatures. Zero sugar. Zero compromise.</p>
+        <ul class="bundle__perks" data-reveal aria-label="What's included">
+          <li>✦ All 4 flavors</li>
+          <li>✦ 30 packets total</li>
+          <li>✦ 9 essential vitamins</li>
+          <li>✦ Zero sugar &amp; zero dyes</li>
+        </ul>
+        <div class="bundle__cta-wrap" data-reveal>
+          <button class="btn btn--primary btn--xl" id="bundleAddToCart">Get the Wild Variety Pack — $14.99</button>
+          <p class="bundle__save-note">Best way to start. Try all four.</p>
+        </div>
+      </div>
+
+      <!-- Visual: kit image + flavor rows -->
+      <div class="bundle__visual">
+        <div class="bundle__kit">
+          <div class="bundle__kit-cluster">
+            <img src="/assets/img/pack-blue-raspberry.png" alt="" class="bundle__kit-pack" data-ki="0" />
+            <img src="/assets/img/pack-watermelon.png" alt="" class="bundle__kit-pack" data-ki="1" />
+            <img src="/assets/img/pack-strawberry-lemonade.png" alt="" class="bundle__kit-pack" data-ki="2" />
+            <img src="/assets/img/pack-fruit-punch.png" alt="" class="bundle__kit-pack" data-ki="3" />
+          </div>
+        </div>
+        <div class="bundle__rows">
+          <div class="bundle__row" style="--flavor-color:#29ABE2">
+            <span class="bundle__row-name">Blue Raspberry</span>
+            <span class="bundle__row-creature">The Yeti</span>
+            <img class="bundle__row-pack" src="/assets/img/pack-blue-raspberry.png" alt="" />
+          </div>
+          <div class="bundle__row" style="--flavor-color:#4ADB14">
+            <span class="bundle__row-name">Watermelon</span>
+            <span class="bundle__row-creature">The Wampus Cat</span>
+            <img class="bundle__row-pack" src="/assets/img/pack-watermelon.png" alt="" />
+          </div>
+          <div class="bundle__row" style="--flavor-color:#FF3ECD">
+            <span class="bundle__row-name">Strawberry Lemonade</span>
+            <span class="bundle__row-creature">Loch &amp; Nessie</span>
+            <img class="bundle__row-pack" src="/assets/img/pack-strawberry-lemonade.png" alt="" />
+          </div>
+          <div class="bundle__row" style="--flavor-color:#E80011">
+            <span class="bundle__row-name">Fruit Punch</span>
+            <span class="bundle__row-creature">The Kraken</span>
+            <img class="bundle__row-pack" src="/assets/img/pack-fruit-punch.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ══ FLAVOR WORLDS (injected by JS) ══ -->
   <section class="worlds" id="flavors"></section>
@@ -163,7 +219,7 @@
       </div>
       <div class="footer__cols">
         <div><h4>Shop</h4><a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a><a href="/product.html?flavor=watermelon">Watermelon</a><a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a><a href="/product.html?flavor=fruit-punch">Fruit Punch</a></div>
-        <div><h4>Company</h4><a href="#story">Our Story</a><a href="#science">Clean Ingredients</a><a href="https://hydrowild.com" target="_blank" rel="noopener">Current Site</a></div>
+        <div><h4>Company</h4><a href="/story.html">Our Story</a><a href="/#science">Clean Ingredients</a><a href="/shop.html">Shop All</a><a href="/contact.html">Contact</a></div>
       </div>
     </div>
     <div class="footer__bottom">

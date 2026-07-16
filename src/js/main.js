@@ -193,6 +193,39 @@ FLAVORS.forEach((f, i) => {
   // gliding straight into the next world.
 });
 
+// ── Bundle section entrance ──
+if (document.querySelector('.bundle__visual')) {
+  // Kit cluster packs fan in — clearProps lets CSS float animations take over after entrance
+  gsap.from('.bundle__kit-pack', {
+    opacity: 0,
+    y: 50,
+    scale: 0.7,
+    duration: 0.85,
+    stagger: 0.1,
+    ease: 'back.out(1.7)',
+    clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: '.bundle', start: 'top 76%', once: true },
+  });
+
+  // Rows slide in — clearProps removes inline styles so CSS :hover transitions work cleanly
+  gsap.from('.bundle__row', {
+    opacity: 0,
+    x: 40,
+    duration: 0.65,
+    stagger: 0.1,
+    ease: 'power3.out',
+    clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: '.bundle', start: 'top 72%', once: true },
+  });
+}
+
+// Bundle CTA
+document.getElementById('bundleAddToCart')?.addEventListener('click', () => {
+  cart.add({ ...BUNDLES[0], packImg: BUNDLES[0].img });
+  cartUI?.toast('Wild Variety Pack added!');
+  cartUI?.open();
+});
+
 // Add-to-cart buttons (event delegation)
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-add]');
