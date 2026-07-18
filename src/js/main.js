@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import { FLAVORS, BUNDLES } from '../data/products.js';
 import { cart } from '../lib/cart.js';
 import { initNav, initCartUI } from './ui.js';
+import { initPopup } from './popup.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -328,3 +329,6 @@ gsap.from('.footer__brand, .footer__cols > div', {
   clearProps: 'transform,opacity',
   scrollTrigger: { trigger: '.footer', start: 'top 88%', once: true },
 });
+
+// ── Popup — email capture + discount code ──
+initPopup();
