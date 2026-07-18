@@ -52,6 +52,14 @@ export function initCartUI() {
   const checkoutBtn   = document.getElementById('cartCheckout');
   const checkoutLabel = document.getElementById('cartCheckoutLabel');
 
+  // Reset button if page is restored from bfcache (user pressed back from Shopify checkout)
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      checkoutBtn.disabled = false;
+      if (checkoutLabel) checkoutLabel.textContent = 'Checkout';
+    }
+  });
+
   checkoutBtn.addEventListener('click', async () => {
     if (!cart.items.length) return toast('Your stash is empty — add a flavor first!');
 
@@ -60,13 +68,13 @@ export function initCartUI() {
     if (checkoutLabel) checkoutLabel.textContent = USE_MOCK ? 'Opening…' : 'Sending to checkout…';
 
     try {
-      await checkout(cart.items, () => cart.clear());
-      // Mock opens a new tab so we stay on the page — reset button
+      await checkout(cart.items);
+      // Mock opens a new tab — reset button so user can checkout again
       if (USE_MOCK) {
         checkoutBtn.disabled = false;
         if (checkoutLabel) checkoutLabel.textContent = 'Checkout';
       }
-      // Real mode redirects away — no reset needed (cart already cleared inside checkout)
+      // Real mode redirects away — bfcache listener handles reset on back
     } catch (err) {
       toast(`Checkout error: ${err.message}`);
       console.error(err);

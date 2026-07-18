@@ -152,33 +152,21 @@ export async function hydrateProducts(handles) {
 
 // ── Checkout entry point ─────────────────────────────────────
 /**
- * cartItems: the full local cart items array from cart.js
- * Each item has: { id, handle, name, img, price, qty }
- *
- * Flow (real mode):
- *  1. Fetch Shopify variant IDs for all unique handles in parallel
- *  2. Create a Shopify cart with those line items
- *  3. Redirect to Shopify's hosted checkout URL
- *
- * Flow (mock mode):
- *  Deep-link to the product page(s) on hydrowild.com so the
- *  demo still feels functional without an API token.
- */
-/**
  * cartItems: local cart items from cart.js — { id, handle, name, img, price, qty }
- * clearCart:  optional callback to wipe local cart just before redirect
  *
  * Real flow:
  *  1. Resolve Shopify variant IDs in parallel (uses prefetch cache where warm)
  *  2. Create a Shopify cart with CartCreate mutation
- *  3. Clear local cart — Shopify owns it from this point
- *  4. Redirect to Shopify's hosted checkout URL
+ *  3. Redirect to Shopify's hosted checkout URL
+ *
+ * Local cart is intentionally NOT cleared before redirect — if the user
+ * hits back from the Shopify checkout page their cart is still intact.
  *
  * Mock flow:
  *  Deep-link to the product page on hydrowild.com so the demo feels
  *  functional without needing an API token.
  */
-export async function checkout(cartItems = [], clearCart) {
+export async function checkout(cartItems = []) {
   if (!cartItems.length) return;
 
   if (USE_MOCK) {
@@ -211,12 +199,7 @@ export async function checkout(cartItems = [], clearCart) {
     quantity:      item.qty,
   }));
 
-  // 3. Create Shopify cart
+  // 3. Create Shopify cart + redirect (local cart stays alive)
   const shopifyCart = await createShopifyCart(lines);
-
-  // 4. Wipe local cart — Shopify owns it now
-  clearCart?.();
-
-  // 5. Redirect to Shopify checkout
   window.location.href = shopifyCart.checkoutUrl;
 }
