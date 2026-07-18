@@ -73,7 +73,6 @@ function show(root) {
     try {
       await saveEmailToShopify(email);
     } catch (err) {
-      // Non-blocking — show code regardless of API result
       console.warn('[HydroWild popup] Email save failed:', err.message);
     }
 
@@ -145,8 +144,10 @@ async function saveEmailToShopify(email) {
       variables: {
         input: {
           email,
+          // Shopify requires a password for customerCreate.
+          // We generate a random one — customers can reset via email if they want to log in.
+          password: (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)),
           acceptsMarketing: true,
-          // firstName/lastName left blank — can be collected later
         },
       },
     }),
@@ -154,11 +155,10 @@ async function saveEmailToShopify(email) {
 
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const json = await res.json();
-  console.log('[HydroWild popup] Shopify response:', JSON.stringify(json));
   const errors = json?.data?.customerCreate?.customerUserErrors ?? [];
-  // TAKEN = customer already exists — still show them the code
+  // CUSTOMER_ALREADY_EXISTS is fine — still show them the code
   const fatal = errors.filter((e) => e.code !== 'CUSTOMER_DISABLED' && e.code !== 'TAKEN');
-  if (fatal.length) throw new Error(`${fatal[0].code}: ${fatal[0].message}`);
+  if (fatal.length) throw new Error(fatal[0].message);
 }
 
 function buildHTML() {
@@ -232,6 +232,7 @@ function buildHTML() {
             Shop Now
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
+          <p class="popup__fine">Code never expires. Try all 4 flavors.</p>
         </div>
       </div>
     </div>
