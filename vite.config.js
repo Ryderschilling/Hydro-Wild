@@ -11,6 +11,8 @@ export default defineConfig({
         story: resolve(__dirname, 'story.html'),
         contact: resolve(__dirname, 'contact.html'),
         ingredients: resolve(__dirname, 'ingredients.html'),
+        blog: resolve(__dirname, 'blog.html'),
+        post: resolve(__dirname, 'post.html'),
       },
     },
   },
