@@ -41,8 +41,8 @@ export const POSTS = [
     date: 'July 10, 2026',
     author: 'Lindey Britton',
     category: 'Nutrition & Science',
-    image: '/assets/img/ig-maximo-approved.jpg',
-    imageAlt: 'Child enjoying HydroWild after outdoor activity',
+    image: '/assets/img/blog-strawberry-lemon-packet.jpg',
+    imageAlt: 'HydroWild Strawberry Lemonade packet surrounded by fresh strawberries and lemons',
     excerpt: 'Water is essential — but when kids are active and sweating, plain water often isn\'t enough. Here\'s what the science says about electrolytes and why they matter for your kids.',
     body: `
       <p>Every parent knows hydration matters. You hand your kid a water bottle before practice, remind them to drink up, and feel like you're doing the right thing. And you are — mostly.</p>
