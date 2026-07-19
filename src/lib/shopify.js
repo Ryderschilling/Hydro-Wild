@@ -202,5 +202,19 @@ export async function checkout(cartItems = []) {
 
   // 3. Create Shopify cart + redirect (local cart stays alive)
   const shopifyCart = await createShopifyCart(lines);
-  window.location.href = shopifyCart.checkoutUrl;
+
+  // Shopify returns checkoutUrl on the store's PRIMARY domain (hydrowild.com).
+  // That domain now points to this headless storefront on Vercel, so the
+  // /cart/c/... checkout path 404s. Rewrite the host to the Shopify-served
+  // domain (same host the Storefront API uses) so checkout resolves to
+  // Shopify's hosted checkout instead of the Vercel app.
+  let redirectUrl = shopifyCart.checkoutUrl;
+  try {
+    const u = new URL(shopifyCart.checkoutUrl);
+    u.host = CONFIG.domain;
+    redirectUrl = u.toString();
+  } catch {
+    // If parsing ever fails, fall back to the raw checkoutUrl.
+  }
+  window.location.href = redirectUrl;
 }
