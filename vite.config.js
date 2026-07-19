@@ -13,6 +13,7 @@ export default defineConfig({
         ingredients: resolve(__dirname, 'ingredients.html'),
         blog: resolve(__dirname, 'blog.html'),
         post: resolve(__dirname, 'post.html'),
+        bestkids: resolve(__dirname, 'best-kids-hydration-drink.html'),
       },
     },
   },
