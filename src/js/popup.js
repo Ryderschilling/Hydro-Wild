@@ -1,9 +1,8 @@
 // ── HydroWild Popup — email capture + discount reveal ──
 //
 // Flow: 10s delay → tease (masked code) → email input → code reveal
-// Shopify: uses customerCreate mutation (Storefront API)
-// Requires unauthenticated_write_customers scope on the Headless channel:
-//   Shopify Admin → Sales channels → Headless → Storefront API → enable scope
+// Email capture: POSTs to /api/subscribe → Omnisend (server-side, key stays secret)
+// The subscribed contact triggers the Omnisend Welcome automation.
 //
 // Discount code WILD15 must exist in Shopify Admin → Discounts
 
@@ -71,7 +70,7 @@ function show(root) {
     btn.textContent = 'Just a sec…';
 
     try {
-      await saveEmailToShopify(email);
+      await saveEmailToOmnisend(email);
     } catch (err) {
       console.warn('[HydroWild popup] Email save failed:', err.message);
     }
@@ -121,44 +120,15 @@ function goStep(root, n) {
   root.querySelector(`.popup__step[data-step="${n}"]`).classList.add('popup__step--active');
 }
 
-async function saveEmailToShopify(email) {
-  const DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN;
-  const TOKEN  = import.meta.env.VITE_SHOPIFY_TOKEN;
-  if (!DOMAIN || !TOKEN) throw new Error('No credentials');
-
-  const res = await fetch(`https://${DOMAIN}/api/2025-04/graphql.json`, {
+async function saveEmailToOmnisend(email) {
+  // Posts to our Vercel serverless function (api/subscribe.js), which talks to
+  // Omnisend server-side so the API key is never exposed in the browser.
+  const res = await fetch('/api/subscribe', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': TOKEN,
-    },
-    body: JSON.stringify({
-      query: `
-        mutation customerCreate($input: CustomerCreateInput!) {
-          customerCreate(input: $input) {
-            customer { id email }
-            customerUserErrors { code field message }
-          }
-        }
-      `,
-      variables: {
-        input: {
-          email,
-          // Shopify requires a password for customerCreate.
-          // We generate a random one — customers can reset via email if they want to log in.
-          password: (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)),
-          acceptsMarketing: true,
-        },
-      },
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
   });
-
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const json = await res.json();
-  const errors = json?.data?.customerCreate?.customerUserErrors ?? [];
-  // CUSTOMER_ALREADY_EXISTS is fine — still show them the code
-  const fatal = errors.filter((e) => e.code !== 'CUSTOMER_DISABLED' && e.code !== 'TAKEN');
-  if (fatal.length) throw new Error(fatal[0].message);
 }
 
 function buildHTML() {
