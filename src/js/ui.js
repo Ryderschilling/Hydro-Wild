@@ -36,6 +36,7 @@ function initMobileMenu(nav) {
     { href: '/story.html',       label: 'Our Story'   },
     { href: '/shop.html',        label: 'Shop'        },
     { href: '/blog.html',        label: 'Blog'        },
+    { href: '/best-kids-hydration-drink.html', label: 'Best Kids Hydration Drink' },
     { href: '/contact.html',     label: 'Contact'     },
   ];
 
