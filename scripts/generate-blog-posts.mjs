@@ -1,0 +1,226 @@
+// Generates static, crawlable HTML for each blog post from src/data/posts.js.
+// Output: blog/<slug>/index.html — real <h1>, title, meta, and Article JSON-LD
+// baked into the markup so it's readable without executing JS.
+//
+// Run via `node scripts/generate-blog-posts.mjs`. Intended to run automatically
+// as an npm predev/prebuild step once wired into package.json.
+
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { POSTS } from '../src/data/posts.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..');
+const SITE = 'https://hydrowild.com';
+
+function escapeAttr(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeText(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function toISODate(dateStr) {
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) {
+    throw new Error(`generate-blog-posts: cannot parse date "${dateStr}"`);
+  }
+  return d.toISOString().slice(0, 10);
+}
+
+function renderPost(post) {
+  const url = `${SITE}/blog/${post.slug}/`;
+  const pageTitle = `${post.title} — The Wild Blog | HydroWild`;
+  const datePublished = toISODate(post.date);
+  const dateModified = post.dateModified ? toISODate(post.dateModified) : datePublished;
+
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished,
+    dateModified,
+    author: { '@type': 'Person', name: post.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'HydroWild',
+      logo: { '@type': 'ImageObject', url: `${SITE}/favicon-512.png` },
+    },
+    image: `${SITE}${post.image}`,
+    mainEntityOfPage: url,
+  };
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>${escapeText(pageTitle)}</title>
+  <meta name="description" content="${escapeAttr(post.excerpt)}" />
+  <link rel="canonical" href="${url}" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="HydroWild for AI" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <!-- ══ Icons & PWA ══ -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#09005E" />
+  <!-- ══ Open Graph ══ -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="HydroWild" />
+  <meta property="og:url" content="${url}" />
+  <meta property="og:title" content="${escapeAttr(post.title)}" />
+  <meta property="og:description" content="${escapeAttr(post.excerpt)}" />
+  <meta property="og:image" content="${SITE}${post.image}" />
+  <!-- ══ Twitter / X ══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@drinkhydrowild" />
+  <meta name="twitter:title" content="${escapeAttr(post.title)}" />
+  <meta name="twitter:image" content="${SITE}${post.image}" />
+  <!-- ══ Authorship & SEO ══ -->
+  <meta name="author" content="${escapeAttr(post.author)}" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <!-- ══ Article JSON-LD ══ -->
+  <script type="application/ld+json">
+${JSON.stringify(articleLd, null, 2)}
+  </script>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <header class="nav is-scrolled" id="nav">
+    <a href="/" class="nav__logo">
+      <img src="/assets/logos/HydroWild_Logo_White.svg" alt="HydroWild" />
+    </a>
+    <nav class="nav__links">
+      <a href="/ingredients.html">The Science</a>
+      <a href="/story.html">Our Story</a>
+      <a href="/shop.html">Shop</a>
+      <a href="/blog.html" style="color:var(--hw-lime-green)">Blog</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <button class="nav__cart" id="cartToggle" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/></svg>
+      <span class="nav__cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <main>
+    <!-- Full-bleed hero with featured image -->
+    <section class="post-hero">
+      <div class="post-hero__bg">
+        <img src="${post.image}" alt="${escapeAttr(post.imageAlt)}" />
+      </div>
+      <div class="post-hero__overlay" aria-hidden="true"></div>
+      <div class="post-hero__content">
+        <div class="post-hero__meta">
+          <span class="post-hero__category">${escapeText(post.category)}</span>
+          <span class="post-hero__date">${escapeText(post.date)}</span>
+        </div>
+        <h1 class="post-hero__title">${escapeText(post.title)}</h1>
+        <p class="post-hero__author">By <strong>${escapeText(post.author)}</strong></p>
+      </div>
+    </section>
+
+    <!-- Post body -->
+    <article class="post-body">
+      <a href="/blog.html" class="post-back">← Back to the Blog</a>
+      <div class="post-content">
+        ${post.body}
+      </div>
+
+      <!-- In-article CTA -->
+      <div class="post-cta">
+        <p class="post-cta__title">READY TO<br /><em>GET WILD?</em></p>
+        <p class="post-cta__sub">Zero sugar. Zero dyes. Nine vitamins. One legendary drink.</p>
+        <a href="/shop.html" class="btn btn--primary">Shop All Flavors</a>
+      </div>
+    </article>
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <img src="/assets/img/creature-yeti.png" alt="" class="footer__creature" aria-hidden="true" loading="lazy" />
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="/assets/logos/HydroWild_Logo_White.svg" alt="HydroWild" class="footer__logo" />
+        <p class="footer__tagline">Zero sugar. Zero dyes. Four legendary critters guarding four flavors.</p>
+        <div class="footer__dots" aria-hidden="true">
+          <span style="background:#29ABE2"></span>
+          <span style="background:#4ADB14"></span>
+          <span style="background:#FF3ECD"></span>
+          <span style="background:#FF8327"></span>
+        </div>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/drinkhydrowild/" target="_blank" rel="noopener" aria-label="Follow HydroWild on Instagram" class="footer__social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+            @drinkhydrowild
+          </a>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <h4>Shop</h4>
+          <a href="/product.html?flavor=blue-raspberry">Blue Raspberry</a>
+          <a href="/product.html?flavor=watermelon">Watermelon</a>
+          <a href="/product.html?flavor=strawberry-lemonade">Strawberry Lemonade</a>
+          <a href="/product.html?flavor=fruit-punch">Fruit Punch</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="/story.html">Our Story</a>
+          <a href="/ingredients.html">Clean Ingredients</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__note">© 2026 HydroWild · Built by Ryder Schilling · Powered by AI Syndicate</p>
+      <p class="footer__note">Get Wild. Stay Hydrated.</p>
+    </div>
+  </footer>
+
+  <div id="cartRoot"></div>
+  <script type="module" src="/src/js/blog-post.js"></script>
+  <!-- AI Syndicate Chatbot -->
+  <script src="https://www.aisyndicate.com/chatbot/embed.js"
+          data-key="cbk_475857a6ba2597800caad0e55dff84b070ef"
+          data-accent="#1c01a2"
+          data-name="Ask Hydrowild"
+          async></script>
+</body>
+</html>
+`;
+}
+
+async function main() {
+  for (const post of POSTS) {
+    const dir = resolve(ROOT, 'blog', post.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(resolve(dir, 'index.html'), renderPost(post), 'utf-8');
+    console.log(`✓ blog/${post.slug}/index.html`);
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
