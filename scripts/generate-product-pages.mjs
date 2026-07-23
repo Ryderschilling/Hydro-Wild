@@ -216,7 +216,7 @@ ${JSON.stringify(ORGANIZATION_LD, null, 2)}
           <div class="pdp__acc-item">
             <button class="pdp__acc-head">How to use <span>+</span></button>
             <div class="pdp__acc-body"><div class="pdp__acc-body-inner" id="accUse">
-              Tear one stick pack, pour into 8–12oz of cold water, shake or stir, get wild. One pack per day is all it takes.
+              Tear one stick pack, pour into 12–16oz of cold water, shake or stir, get wild. One pack per day is all it takes.
             </div></div>
           </div>
         </div>
