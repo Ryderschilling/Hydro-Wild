@@ -21,7 +21,7 @@ function renderGrid() {
 
   grid.innerHTML = POSTS.map((post) => `
     <article class="blog-card" data-blog-card>
-      <a href="/post.html?slug=${post.slug}" class="blog-card__img-link" tabindex="-1" aria-hidden="true">
+      <a href="/blog/${post.slug}/" class="blog-card__img-link" tabindex="-1" aria-hidden="true">
         <div class="blog-card__img-wrap">
           <img src="${post.image}" alt="${post.imageAlt}" loading="lazy" />
         </div>
@@ -32,10 +32,10 @@ function renderGrid() {
           <span class="blog-card__date">${post.date}</span>
         </div>
         <h2 class="blog-card__title">
-          <a href="/post.html?slug=${post.slug}">${post.title}</a>
+          <a href="/blog/${post.slug}/">${post.title}</a>
         </h2>
         <p class="blog-card__excerpt">${post.excerpt}</p>
-        <a href="/post.html?slug=${post.slug}" class="blog-card__cta">Read More →</a>
+        <a href="/blog/${post.slug}/" class="blog-card__cta">Read More →</a>
       </div>
     </article>
   `).join('');

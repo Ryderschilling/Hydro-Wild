@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-blog-posts.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/generate-blog-posts.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },

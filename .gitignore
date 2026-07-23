@@ -4,6 +4,10 @@ node_modules/
 # Build output
 dist/
 
+# Generated blog post pages (see scripts/generate-blog-posts.mjs) — reproduced
+# from src/data/posts.js on every predev/prebuild run, not hand-maintained.
+/blog/
+
 # Vite
 .vite/
 vite.config.js.timestamp-*
