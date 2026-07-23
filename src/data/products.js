@@ -78,7 +78,7 @@ export const BUNDLES = [
     handle: 'wild-starter-kit',
     name: 'The Wild Starter Kit',
     desc: 'The perfect intro to HydroWild.',
-    img: '/assets/img/starter-kit.png',
+    img: '/assets/img/starter-kit-sunglasses.jpg',
     price: 24.99,
     comparePrice: 49.99,
   },

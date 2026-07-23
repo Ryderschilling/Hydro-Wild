@@ -106,7 +106,7 @@ worlds.innerHTML = FLAVORS.map(
           <p class="world__lore">${f.lore}</p>
           <div class="world__actions">
             <button class="btn btn--primary" data-add="${f.id}">Add to cart</button>
-            <a class="btn btn--ghost" href="/product.html?flavor=${f.id}">Explore</a>
+            <a class="btn btn--ghost" href="/products/${f.id}/">Explore</a>
             <span class="world__price">$${f.price.toFixed(2)}</span>
           </div>
         </div>

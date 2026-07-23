@@ -1,11 +1,122 @@
-<!DOCTYPE html>
+// Generates static, crawlable HTML for the 4 flavor PDPs + the starter kit
+// from src/data/products.js. Output: products/<slug>/index.html — real
+// <h1>, title, meta, and Product JSON-LD baked into the markup so it's
+// readable without executing JS. The rest of the interactive PDP (gallery
+// switching, accordions, testimonials, FAQ, cart) is still rendered by
+// src/js/product-static.js on top of this shell — see src/js/lib/pdp.js
+// for the logic shared with the legacy product.html?flavor= template.
+//
+// Run via `node scripts/generate-product-pages.mjs`. Runs automatically
+// as an npm predev/prebuild step (see package.json).
+//
+// NOTE on price: src/data/products.js holds the static fallback price used
+// whenever the Shopify Storefront API isn't hydrated (no VITE_SHOPIFY_TOKEN
+// — true for this repo/session). If the live deployment has a real token
+// configured, Shopify admin could show a different live price than what's
+// baked into this static JSON-LD. There's no way to detect that from here;
+// keep this file's prices in sync with Shopify if the two ever diverge.
+
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { FLAVORS, getBundle } from '../src/data/products.js';
+import { ORGANIZATION_LD } from './lib/organization-ld.mjs';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..');
+const SITE = 'https://hydrowild.com';
+
+// Ingredient blurb shown in the "What's inside" accordion on every flavor
+// PDP today (product.html's #accInside, identical across all 4 flavors).
+const FLAVOR_INSIDE_COPY =
+  "Potassium and magnesium for real hydration, plus vitamins A, C, D, B6, B12 and folate. Zero sugar, zero artificial dyes, zero junk.";
+// Mirrors BUNDLE_OVERRIDES['starter-kit'].insideCopy in src/js/lib/pdp.js.
+const STARTER_KIT_INSIDE_COPY =
+  "A taste of every flavor in one box — so your family can find their favorite critter before going all-in. Zero sugar, zero artificial dyes, zero junk.";
+
+const starterKit = getBundle('starter-kit');
+
+const PRODUCTS = [
+  ...FLAVORS.map((f) => ({
+    slug: f.id,
+    pageName: f.name,
+    ldName: `Kid's Daily Hydration Drink Mix — ${f.name}`,
+    tagline: f.tagline,
+    insideCopy: FLAVOR_INSIDE_COPY,
+    price: f.price,
+    handle: f.handle,
+    creatureTag: f.presents,
+    creatureImg: f.creatureImg,
+    mainImg: f.packImg,
+    mainImgAlt: `HydroWild ${f.name}`,
+    priceUnit: '/ box · 8 stick packs',
+    images: [f.packImg, `/assets/img/action-${f.id}.png`, `/assets/img/pour-${f.id}.png`],
+  })),
+  {
+    slug: starterKit.id,
+    pageName: 'Wild Starter Kit',
+    ldName: "Kid's Daily Hydration Drink Mix — Wild Starter Kit",
+    tagline: starterKit.desc,
+    insideCopy: STARTER_KIT_INSIDE_COPY,
+    price: starterKit.price,
+    handle: starterKit.handle,
+    creatureTag: 'Try every flavor',
+    creatureImg: '/assets/img/creature-kraken.png',
+    mainImg: starterKit.img,
+    mainImgAlt: 'Wild Starter Kit',
+    priceUnit: '/ starter kit',
+    images: [starterKit.img],
+  },
+];
+
+function escapeAttr(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeText(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderProduct(p) {
+  const url = `${SITE}/products/${p.slug}/`;
+  const pageTitle = `HydroWild ${p.pageName} — Kids Daily Hydration`;
+  const ogTitle = `HydroWild ${p.pageName}`;
+  const description = `${p.tagline} ${p.insideCopy}`;
+
+  const productLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.ldName,
+    description,
+    image: p.images.map((img) => `${SITE}${img}`),
+    brand: { '@type': 'Brand', name: 'HydroWild' },
+    category: 'Health & Beauty > Health Care > Nutrition > Hydration Supplements',
+    audience: { '@type': 'PeopleAudience', suggestedMinAge: 4 },
+    offers: {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'USD',
+      price: p.price.toFixed(2),
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: 'HydroWild' },
+    },
+  };
+
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Shop HydroWild — Kids Daily Hydration</title>
-  <meta name="description" content="Zero-sugar kids hydration drink mix. Electrolytes + 7 essential vitamins. No artificial ingredients." />
-  <link rel="canonical" href="https://hydrowild.com/product.html" />
+  <title>${escapeText(pageTitle)}</title>
+  <meta name="description" content="${escapeAttr(description)}" />
+  <link rel="canonical" href="${url}" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="HydroWild for AI" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,98 +130,33 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#09005E" />
-  <meta name="msapplication-TileColor" content="#09005E" />
-  <meta name="msapplication-TileImage" content="/favicon-192.png" />
   <!-- ══ Open Graph ══ -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="product" />
   <meta property="og:site_name" content="HydroWild" />
-  <meta property="og:url" content="https://hydrowild.com/product.html" />
-  <meta property="og:title" content="Product — HydroWild" />
-  <meta property="og:description" content="Zero-sugar kids hydration drink mix. Electrolytes + 7 essential vitamins. No artificial ingredients." />
-  <meta property="og:image" content="https://hydrowild.com/favicon-512.png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
+  <meta property="og:url" content="${url}" />
+  <meta property="og:title" content="${escapeAttr(ogTitle)}" />
+  <meta property="og:description" content="${escapeAttr(description)}" />
+  <meta property="og:image" content="${SITE}${p.mainImg}" />
   <!-- ══ Twitter / X ══ -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@drinkhydrowild" />
-  <meta name="twitter:title" content="HydroWild Flavor" />
-  <meta name="twitter:image" content="https://hydrowild.com/favicon-512.png" />
+  <meta name="twitter:title" content="${escapeAttr(ogTitle)}" />
+  <meta name="twitter:image" content="${SITE}${p.mainImg}" />
   <!-- ══ Authorship & SEO ══ -->
-  <meta name="author" content="Ryder Schilling" />
-  <meta name="creator" content="Ryder Schilling" />
-  <meta name="generator" content="AI Syndicate" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-  <meta name="tdm-reservation" content="0" />
-  <meta name="revisit-after" content="7 days" />
-  <!-- ══ JSON-LD Structured Data ══ -->
+  <!-- ══ Product JSON-LD ══ -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "HydroWild",
-    "url": "https://hydrowild.com",
-    "description": "Zero-sugar, zero-dye, science-backed hydration for kids and teens. Electrolytes + 9 essential vitamins.",
-    "author": {
-      "@type": "Person",
-      "name": "Ryder Schilling"
-    },
-    "creator": {
-      "@type": "Organization",
-      "name": "AI Syndicate"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "HydroWild",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://hydrowild.com/favicon-512.png"
-      }
-    }
-  }
+${JSON.stringify(productLd, null, 2)}
   </script>
-  <!-- Organization (identity anchor for AI engines) -->
+  <!-- ══ Organization JSON-LD ══ -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "HydroWild",
-    "alternateName": "Drink HydroWild",
-    "url": "https://hydrowild.com",
-    "logo": "https://hydrowild.com/favicon-512.png",
-    "description": "HydroWild makes zero-sugar, zero-dye electrolyte drink mixes for kids and teens, with 7 vitamins and essential electrolytes in cryptid-themed flavors.",
-    "foundingDate": "2022",
-    "email": "support@hydrowild.com",
-    "founders": [
-      { "@type": "Person", "name": "CJ Britton" },
-      { "@type": "Person", "name": "Lindey Britton" }
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "3179 Green Valley Road, Suite 218",
-      "addressLocality": "Vestavia Hills",
-      "addressRegion": "AL",
-      "postalCode": "35243",
-      "addressCountry": "US"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer support",
-      "email": "support@hydrowild.com",
-      "areaServed": "US",
-      "availableLanguage": "English"
-    },
-    "sameAs": [
-      "https://www.instagram.com/drinkhydrowild/",
-      "https://www.linkedin.com/company/hydrowild"
-    ]
-  }
+${JSON.stringify(ORGANIZATION_LD, null, 2)}
   </script>
 </head>
-<body>
+<body data-product-slug="${p.slug}">
   <header class="nav is-scrolled" id="nav">
     <a href="/" class="nav__logo"><img src="/assets/logos/logo-white.svg" alt="HydroWild" /></a>
     <nav class="nav__links">
-      
       <a href="/ingredients.html">The Science</a>
       <a href="/story.html">Our Story</a>
       <a href="/shop.html">Shop</a>
@@ -129,17 +175,17 @@
     <div class="pdp__inner">
       <div class="pdp__gallery">
         <div class="pdp__hero-img">
-          <img class="pdp__creature-bg" id="creatureBg" src="" alt="" />
-          <img class="pdp__main-img" id="mainImg" src="" alt="" />
+          <img class="pdp__creature-bg" id="creatureBg" src="${p.creatureImg}" alt="" />
+          <img class="pdp__main-img" id="mainImg" src="${p.mainImg}" alt="${escapeAttr(p.mainImgAlt)}" />
         </div>
         <div class="pdp__thumbs" id="thumbs"></div>
       </div>
 
       <div class="pdp__info">
-        <span class="pdp__creature-tag" id="creatureTag"></span>
-        <h1 class="pdp__title" id="title"></h1>
-        <p class="pdp__tagline" id="tagline"></p>
-        <div class="pdp__price"><span id="price"></span> <small id="priceUnit">/ box · 8 stick packs</small></div>
+        <span class="pdp__creature-tag" id="creatureTag">${escapeText(p.creatureTag)}</span>
+        <h1 class="pdp__title" id="title">${escapeText(p.pageName)}</h1>
+        <p class="pdp__tagline" id="tagline">${escapeText(p.tagline)}</p>
+        <div class="pdp__price"><span id="price">$${p.price.toFixed(2)}</span> <small id="priceUnit">${escapeText(p.priceUnit)}</small></div>
         <p class="pdp__badges-label">Parent Approved ✓</p>
         <div class="pdp__badges">
           <span>No Caffeine</span><span>No Sugar</span><span>No Artificial Colors</span><span>No Artificial Flavors</span><span>No Artificial Sweeteners</span>
@@ -154,14 +200,11 @@
         </div>
         <p class="pdp__stock">✓ In stock — ships in 1–2 business days</p>
 
-        <!-- Supplement facts, science &amp; how-to-use now live as scrollable
-             images in the gallery (CJ request 2026-07-19) — accordions keep
-             the short copy only. -->
         <div class="pdp__accordion" id="accordion">
           <div class="pdp__acc-item open">
             <button class="pdp__acc-head">What's inside <span>+</span></button>
             <div class="pdp__acc-body"><div class="pdp__acc-body-inner" id="accInside">
-              Potassium and magnesium for real hydration, plus vitamins A, C, D, B6, B12 and folate. Zero sugar, zero artificial dyes, zero junk.
+              ${escapeText(p.insideCopy)}
             </div></div>
           </div>
           <div class="pdp__acc-item">
@@ -260,7 +303,7 @@
   </footer>
 
   <div id="cartRoot"></div>
-  <script type="module" src="/src/js/product.js"></script>
+  <script type="module" src="/src/js/product-static.js"></script>
   <!-- AI Syndicate Chatbot -->
   <script src="https://www.aisyndicate.com/chatbot/embed.js"
           data-key="cbk_475857a6ba2597800caad0e55dff84b070ef"
@@ -269,3 +312,19 @@
           async></script>
 </body>
 </html>
+`;
+}
+
+async function main() {
+  for (const p of PRODUCTS) {
+    const dir = resolve(ROOT, 'products', p.slug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(resolve(dir, 'index.html'), renderProduct(p), 'utf-8');
+    console.log(`✓ products/${p.slug}/index.html`);
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

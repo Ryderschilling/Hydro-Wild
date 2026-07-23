@@ -14,7 +14,7 @@ const cartUI = initCartUI();
 // ── Build product cards ──
 const grid = document.getElementById('shopGrid');
 grid.innerHTML = FLAVORS.map((f) => `
-  <div class="shop-card" style="--card-color:${f.color};--card-bg:${f.bg};cursor:pointer" data-href="/product.html?flavor=${f.id}">
+  <div class="shop-card" style="--card-color:${f.color};--card-bg:${f.bg};cursor:pointer" data-href="/products/${f.id}/">
     <div class="shop-card__bg-creature" aria-hidden="true">
       <img src="${f.creatureImg}" alt="" loading="lazy" />
     </div>
@@ -26,7 +26,7 @@ grid.innerHTML = FLAVORS.map((f) => `
       <p class="shop-card__price" data-price-id="${f.id}">$${f.price.toFixed(2)}</p>
       <div class="shop-card__actions">
         <button class="btn btn--primary" data-add="${f.id}">Add to Cart</button>
-        <a class="btn btn--ghost" href="/product.html?flavor=${f.id}">View Flavor</a>
+        <a class="btn btn--ghost" href="/products/${f.id}/">View Flavor</a>
       </div>
     </div>
   </div>

@@ -8,6 +8,10 @@ dist/
 # from src/data/posts.js on every predev/prebuild run, not hand-maintained.
 /blog/
 
+# Generated product pages (see scripts/generate-product-pages.mjs) — reproduced
+# from src/data/products.js on every predev/prebuild run, not hand-maintained.
+/products/
+
 # Vite
 .vite/
 vite.config.js.timestamp-*

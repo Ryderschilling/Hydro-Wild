@@ -17,6 +17,36 @@
       "source": "/blogs/wild-well/healthy-lunchbox-hacks-easy-swaps-kids-will-love",
       "destination": "/blog/healthy-lunchbox-hacks-easy-swaps-kids-will-love/",
       "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [{ "type": "query", "key": "flavor", "value": "blue-raspberry" }],
+      "destination": "/products/blue-raspberry/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [{ "type": "query", "key": "flavor", "value": "watermelon" }],
+      "destination": "/products/watermelon/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [{ "type": "query", "key": "flavor", "value": "strawberry-lemonade" }],
+      "destination": "/products/strawberry-lemonade/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [{ "type": "query", "key": "flavor", "value": "fruit-punch" }],
+      "destination": "/products/fruit-punch/",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "has": [{ "type": "query", "key": "flavor", "value": "starter-kit" }],
+      "destination": "/products/starter-kit/",
+      "permanent": true
     }
   ]
 }
